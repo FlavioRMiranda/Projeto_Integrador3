@@ -1,5 +1,6 @@
 ﻿using Draft;
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -12,6 +13,8 @@ namespace Projeto_Integrador3
         private int idJogadorAtual;
         private string senhaJogadorAtual;
         private string GRUPO = "Fossilizados";
+        private string jogadorDaVez;
+        private string regraAtual;
 
         public Form1()
         {
@@ -236,6 +239,24 @@ namespace Projeto_Integrador3
 
                 string idJogador = dados[0].Trim();
                 string senhaJogador = dados[1].Trim();
+                jogadorDaVez = dados[0];
+                regraAtual = dados[1];
+
+                string caminho = @"C:\Users\FlavioMiranda\source\repos\Projeto_Integrador_BCC\Projeto_Integrador_BCC\Projeto_Integrador3\Projeto_Integrador3\credenciais.txt";
+
+                Directory.CreateDirectory(Path.GetDirectoryName(caminho));
+
+                string conteudo =
+                    "===== NOVO REGISTRO =====" + Environment.NewLine +
+                    "ID Jogador: " + (idJogador ?? "N/A") + Environment.NewLine +
+                    "Nome: " + (nomeJogador ?? "N/A") + Environment.NewLine +
+                    "Senha Jogador: " + (senhaJogador ?? "N/A") + Environment.NewLine +
+                    "ID Partida: " + idPartida + Environment.NewLine +
+                    "Senha Partida: " + (senhaPartida ?? "N/A") + Environment.NewLine +
+                    "Data: " + DateTime.Now + Environment.NewLine +
+                    "----------------------" + Environment.NewLine;
+
+                File.AppendAllText(caminho, conteudo);
 
                 labelIdJogador.Text = "ID Jogador: " + idJogador;
                 labelSenhaJogador.Text = "Senha Jogador: " + senhaJogador;
@@ -351,6 +372,19 @@ namespace Projeto_Integrador3
                 // Inicia a partida
                 string resultado = Draft.Jogo.Iniciar(idJogador, senha);
                 MessageBox.Show(resultado, "Resultado da Partida");
+
+                string[] dados = resultado.Split(',');
+
+                jogadorDaVez = dados[0];
+                regraAtual = dados[1];
+
+                labelJogadorDaVez.Text = "Jogador da vez: " + jogadorDaVez;
+                labelDado.Text = "Dado: " + regraAtual;
+
+                // (opcional, mas útil pra debug)
+                MessageBox.Show(resultado, "Resultado da Partida");
+
+
 
                 // Lista os dinossauros do jogo
                 string listaDinos = Draft.Jogo.ListarDinossauros(true);

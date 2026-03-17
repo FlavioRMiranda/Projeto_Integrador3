@@ -63,6 +63,8 @@ namespace Projeto_Integrador3
             this.textBoxDinossauros = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.labelJogadorDaVez = new System.Windows.Forms.Label();
+            this.labelDado = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTabuleiro)).BeginInit();
             this.panelMenu.SuspendLayout();
             this.SuspendLayout();
@@ -81,6 +83,8 @@ namespace Projeto_Integrador3
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.SkyBlue;
+            this.panelMenu.Controls.Add(this.labelDado);
+            this.panelMenu.Controls.Add(this.labelJogadorDaVez);
             this.panelMenu.Controls.Add(this.label5);
             this.panelMenu.Controls.Add(this.label4);
             this.panelMenu.Controls.Add(this.textBoxDinossauros);
@@ -384,6 +388,24 @@ namespace Projeto_Integrador3
             this.label5.TabIndex = 21;
             this.label5.Text = "Versão DLL:";
             // 
+            // labelJogadorDaVez
+            // 
+            this.labelJogadorDaVez.AutoSize = true;
+            this.labelJogadorDaVez.Location = new System.Drawing.Point(307, 80);
+            this.labelJogadorDaVez.Name = "labelJogadorDaVez";
+            this.labelJogadorDaVez.Size = new System.Drawing.Size(131, 20);
+            this.labelJogadorDaVez.TabIndex = 22;
+            this.labelJogadorDaVez.Text = "Jogador Da Vez";
+            // 
+            // labelDado
+            // 
+            this.labelDado.AutoSize = true;
+            this.labelDado.Location = new System.Drawing.Point(307, 115);
+            this.labelDado.Name = "labelDado";
+            this.labelDado.Size = new System.Drawing.Size(118, 20);
+            this.labelDado.TabIndex = 23;
+            this.labelDado.Text = "Face do Dado";
+            // 
             // Form1
             // 
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -418,5 +440,7 @@ namespace Projeto_Integrador3
         private TextBox textBoxDinossauros;
         private Label label4;
         private Label label5;
+        private Label labelDado;
+        private Label labelJogadorDaVez;
     }
 }
