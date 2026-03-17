@@ -1,0 +1,24 @@
+ID: 1195
+Senha: ECCFCE
+----------------------
+ID: 1196
+Senha: 31F98B
+----------------------
+ID: 1197
+Senha: 91FDEB
+Nome: Flavio1
+----------------------
+ID: 1198
+Senha: 59D097
+Nome: Flavio2
+ID Partida: 1101
+Senha Partida: 12345
+----------------------
+===== NOVO REGISTRO =====
+ID Jogador: 1199
+Nome: Flavio1
+Senha Jogador: 4094C5
+ID Partida: 1102
+Senha Partida: 12345
+Data: 17/03/2026 19:59:29
+----------------------
