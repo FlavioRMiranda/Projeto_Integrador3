@@ -536,5 +536,20 @@ namespace Projeto_Integrador3
         {
 
         }
+
+        private void groupBoxPartida_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label4_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
