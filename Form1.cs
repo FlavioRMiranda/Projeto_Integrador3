@@ -145,11 +145,22 @@ namespace Projeto_Integrador3
                 {
                     // Separar pelos campos da string: Id, Nome, Data, Status
                     string[] partes = linha.Split(',');
-                    if (partes.Length >= 2)
+                    if (partes.Length >= 4)
                     {
-                        string id = partes[0].Trim();      // Id da partida
-                        string nome = partes[1].Trim();    // Nome da partida
-                        listBoxPartidas.Items.Add($"{id} - {nome}");
+                        string id = partes[0].Trim();
+                        string nome = partes[1].Trim();
+                        string data = partes[2].Trim();
+                        string status = partes[3].Trim();
+
+                        // Tradução do status
+                        string descricaoStatus = status == "A" ? "Aberta" :
+                                                 status == "E" ? "Encerrada" :
+                                                 status == "J" ? "Jogando" :
+                                                 status;
+
+                        listBoxPartidas.Items.Add(
+                            $"{id} - {nome} ({descricaoStatus})"
+                        );
                     }
                 }
             }
@@ -456,6 +467,21 @@ namespace Projeto_Integrador3
         }
 
         private void labelGrupo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxSenhaPartida_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelPartidas_Click(object sender, EventArgs e)
         {
 
         }
