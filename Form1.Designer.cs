@@ -306,7 +306,7 @@ namespace Projeto_Integrador3
             // 
             // labelGrupo
             // 
-            this.labelGrupo.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelGrupo.Font = new System.Drawing.Font("Segoe UI", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelGrupo.ForeColor = System.Drawing.Color.Black;
             this.labelGrupo.Location = new System.Drawing.Point(6, 35);
             this.labelGrupo.Name = "labelGrupo";

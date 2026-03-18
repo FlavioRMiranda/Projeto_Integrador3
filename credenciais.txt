@@ -108,3 +108,17 @@ ID Partida: 1120
 Senha Partida: 12345
 Data: 18/03/2026 14:34:22
 ----------------------
+===== NOVO REGISTRO =====
+Nome: Flavio1
+Senha Jogador: A45E15
+ID Partida: 1128
+Senha Partida: 12345
+Data: 18/03/2026 17:24:37
+----------------------
+===== NOVO REGISTRO =====
+Nome: Flavio2
+Senha Jogador: 025EAE
+ID Partida: 1128
+Senha Partida: 12345
+Data: 18/03/2026 17:24:51
+----------------------

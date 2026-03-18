@@ -74,14 +74,21 @@ namespace Projeto_Integrador3
         // ==========================
         // CRIAR PARTIDA
         // ==========================
+
         private void buttonCriarPartida_Click(object sender, EventArgs e)
         {
             try
             {
-                string nome = textBoxNomePartida.Text;
-                string senha = textBoxSenhaPartida.Text;
- 
-                // Validação de tamanho conforme documentação
+                string nome = textBoxNomePartida.Text.Trim();
+                string senha = textBoxSenhaPartida.Text.Trim();
+
+                // Validação
+                if (nome.Length == 0)
+                {
+                    MessageBox.Show("Informe o nome da partida.");
+                    return;
+                }
+
                 if (nome.Length > 15)
                 {
                     MessageBox.Show("O nome da partida deve ter no máximo 15 caracteres.");
@@ -94,29 +101,21 @@ namespace Projeto_Integrador3
                     return;
                 }
 
-                // Cria a partida
-                string retorno = Jogo.CriarPartida(nome, senha, GRUPO);
+                // 🔥 Chamada correta
+                string retorno = Jogo.CriarPartida(nome, senha, GRUPO).Trim();
 
-                // Divide a resposta do servidor
-                string[] dados = retorno.Split(',');
-
-                if (dados.Length >= 2)
+                // 🔍 Tenta interpretar como ID da partida
+                if (int.TryParse(retorno, out int idPartida))
                 {
-                    // Primeiro valor → ID do jogador
-                    idJogadorCriador = int.Parse(dados[0]);
+                    MessageBox.Show("Partida criada com sucesso! ID: " + idPartida);
 
-                    // Segundo valor → senha do jogador
-                    senhaJogadorCriador = dados[1];
-
-                    // Atualiza os labels no formulário
-                    labelSenhaJogador.Text = "Senha Jogador: ******";
-                    labelSenhaJogador.Text = "Senha Jogador: " + new string('*', senhaJogadorCriador.Length);
-                    MessageBox.Show("Senha do jogador: " + new string('*', senhaJogadorCriador.Length));
+                    // Atualiza lista
                     AtualizarListaPartidas();
                 }
                 else
                 {
-                    MessageBox.Show("Resposta inesperada do servidor: " + retorno);
+                    // Se não for número, é erro vindo do servidor
+                    MessageBox.Show("Erro ao criar partida: " + retorno);
                 }
             }
             catch (Exception ex)
@@ -124,7 +123,6 @@ namespace Projeto_Integrador3
                 MessageBox.Show("Ocorreu um erro: " + ex.Message);
             }
         }
-
 
         // ==========================
         // ATUALIZAR  PARTIDAS
