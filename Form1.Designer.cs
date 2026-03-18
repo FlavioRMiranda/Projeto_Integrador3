@@ -81,6 +81,13 @@ namespace Projeto_Integrador3
             this.label9 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.panel7 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTabuleiro)).BeginInit();
             this.panelMenu.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -92,6 +99,12 @@ namespace Projeto_Integrador3
             this.groupBox4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBoxTabuleiro
@@ -108,26 +121,26 @@ namespace Projeto_Integrador3
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.SkyBlue;
+            this.panelMenu.Controls.Add(this.panel7);
+            this.panelMenu.Controls.Add(this.groupBox7);
+            this.panelMenu.Controls.Add(this.groupBox6);
+            this.panelMenu.Controls.Add(this.panel5);
+            this.panelMenu.Controls.Add(this.groupBox5);
             this.panelMenu.Controls.Add(this.panel4);
             this.panelMenu.Controls.Add(this.groupBox4);
             this.panelMenu.Controls.Add(this.panel2);
             this.panelMenu.Controls.Add(this.groupBox3);
-            this.panelMenu.Controls.Add(this.buttonMostrarJogadores);
-            this.panelMenu.Controls.Add(this.buttonListarPartidas);
             this.panelMenu.Controls.Add(this.panel1);
             this.panelMenu.Controls.Add(this.groupBox2);
             this.panelMenu.Controls.Add(this.panelContainer);
             this.panelMenu.Controls.Add(this.groupBox1);
             this.panelMenu.Controls.Add(this.label5);
             this.panelMenu.Controls.Add(this.label4);
-            this.panelMenu.Controls.Add(this.textBoxDinossauros);
             this.panelMenu.Controls.Add(this.labelDino);
             this.panelMenu.Controls.Add(this.labelSenhaJogador);
             this.panelMenu.Controls.Add(this.labelIdJogador);
-            this.panelMenu.Controls.Add(this.listBoxJogadores);
             this.panelMenu.Controls.Add(this.buttonVersao);
             this.panelMenu.Controls.Add(this.labelGrupo);
-            this.panelMenu.Controls.Add(this.listBoxPartidas);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelMenu.Location = new System.Drawing.Point(659, 0);
             this.panelMenu.Name = "panelMenu";
@@ -216,7 +229,7 @@ namespace Projeto_Integrador3
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(327, 545);
+            this.label4.Location = new System.Drawing.Point(305, 558);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 17);
             this.label4.TabIndex = 20;
@@ -224,12 +237,12 @@ namespace Projeto_Integrador3
             // 
             // textBoxDinossauros
             // 
-            this.textBoxDinossauros.Location = new System.Drawing.Point(286, 407);
+            this.textBoxDinossauros.Location = new System.Drawing.Point(0, 35);
             this.textBoxDinossauros.Multiline = true;
             this.textBoxDinossauros.Name = "textBoxDinossauros";
             this.textBoxDinossauros.ReadOnly = true;
             this.textBoxDinossauros.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxDinossauros.Size = new System.Drawing.Size(135, 118);
+            this.textBoxDinossauros.Size = new System.Drawing.Size(171, 111);
             this.textBoxDinossauros.TabIndex = 19;
             this.textBoxDinossauros.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -248,7 +261,7 @@ namespace Projeto_Integrador3
             // 
             this.labelSenhaJogador.AutoSize = true;
             this.labelSenhaJogador.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSenhaJogador.Location = new System.Drawing.Point(167, 574);
+            this.labelSenhaJogador.Location = new System.Drawing.Point(131, 558);
             this.labelSenhaJogador.Name = "labelSenhaJogador";
             this.labelSenhaJogador.Size = new System.Drawing.Size(106, 17);
             this.labelSenhaJogador.TabIndex = 16;
@@ -259,7 +272,7 @@ namespace Projeto_Integrador3
             // 
             this.labelIdJogador.AutoSize = true;
             this.labelIdJogador.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelIdJogador.Location = new System.Drawing.Point(167, 545);
+            this.labelIdJogador.Location = new System.Drawing.Point(136, 577);
             this.labelIdJogador.Name = "labelIdJogador";
             this.labelIdJogador.Size = new System.Drawing.Size(78, 17);
             this.labelIdJogador.TabIndex = 15;
@@ -282,7 +295,8 @@ namespace Projeto_Integrador3
             // 
             this.buttonMostrarJogadores.BackColor = System.Drawing.Color.Silver;
             this.buttonMostrarJogadores.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonMostrarJogadores.Location = new System.Drawing.Point(146, 378);
+            this.buttonMostrarJogadores.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.buttonMostrarJogadores.Location = new System.Drawing.Point(6, 6);
             this.buttonMostrarJogadores.Name = "buttonMostrarJogadores";
             this.buttonMostrarJogadores.Size = new System.Drawing.Size(132, 23);
             this.buttonMostrarJogadores.TabIndex = 3;
@@ -294,9 +308,9 @@ namespace Projeto_Integrador3
             // 
             this.listBoxJogadores.FormattingEnabled = true;
             this.listBoxJogadores.ItemHeight = 16;
-            this.listBoxJogadores.Location = new System.Drawing.Point(155, 409);
+            this.listBoxJogadores.Location = new System.Drawing.Point(0, 33);
             this.listBoxJogadores.Name = "listBoxJogadores";
-            this.listBoxJogadores.Size = new System.Drawing.Size(118, 116);
+            this.listBoxJogadores.Size = new System.Drawing.Size(168, 116);
             this.listBoxJogadores.TabIndex = 12;
             this.listBoxJogadores.SelectedIndexChanged += new System.EventHandler(this.listBoxJogadores_SelectedIndexChanged);
             // 
@@ -317,7 +331,7 @@ namespace Projeto_Integrador3
             this.buttonListarPartidas.BackColor = System.Drawing.Color.LightGray;
             this.buttonListarPartidas.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonListarPartidas.ForeColor = System.Drawing.Color.Black;
-            this.buttonListarPartidas.Location = new System.Drawing.Point(0, 380);
+            this.buttonListarPartidas.Location = new System.Drawing.Point(6, 6);
             this.buttonListarPartidas.Name = "buttonListarPartidas";
             this.buttonListarPartidas.Size = new System.Drawing.Size(103, 23);
             this.buttonListarPartidas.TabIndex = 0;
@@ -437,9 +451,9 @@ namespace Projeto_Integrador3
             // 
             this.labelGrupo.Font = new System.Drawing.Font("Segoe UI", 18F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelGrupo.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.labelGrupo.Location = new System.Drawing.Point(384, 539);
+            this.labelGrupo.Location = new System.Drawing.Point(360, 555);
             this.labelGrupo.Name = "labelGrupo";
-            this.labelGrupo.Size = new System.Drawing.Size(154, 36);
+            this.labelGrupo.Size = new System.Drawing.Size(178, 36);
             this.labelGrupo.TabIndex = 7;
             this.labelGrupo.Click += new System.EventHandler(this.labelGrupo_Click);
             // 
@@ -458,9 +472,9 @@ namespace Projeto_Integrador3
             // listBoxPartidas
             // 
             this.listBoxPartidas.ItemHeight = 16;
-            this.listBoxPartidas.Location = new System.Drawing.Point(0, 409);
+            this.listBoxPartidas.Location = new System.Drawing.Point(0, 35);
             this.listBoxPartidas.Name = "listBoxPartidas";
-            this.listBoxPartidas.Size = new System.Drawing.Size(148, 116);
+            this.listBoxPartidas.Size = new System.Drawing.Size(168, 116);
             this.listBoxPartidas.TabIndex = 11;
             // 
             // listBox1
@@ -515,7 +529,7 @@ namespace Projeto_Integrador3
             this.groupBox2.Controls.Add(this.labelDado);
             this.groupBox2.Location = new System.Drawing.Point(3, 220);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(266, 152);
+            this.groupBox2.Size = new System.Drawing.Size(266, 165);
             this.groupBox2.TabIndex = 30;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "groupBox2";
@@ -641,6 +655,79 @@ namespace Projeto_Integrador3
             this.label12.Text = "Iniciar Partida";
             this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.listBoxPartidas);
+            this.groupBox5.Location = new System.Drawing.Point(3, 403);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(168, 152);
+            this.groupBox5.TabIndex = 31;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "groupBox5";
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel5.Controls.Add(this.buttonListarPartidas);
+            this.panel5.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panel5.Location = new System.Drawing.Point(3, 403);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(168, 34);
+            this.panel5.TabIndex = 32;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.panel6);
+            this.groupBox6.Controls.Add(this.listBoxJogadores);
+            this.groupBox6.Location = new System.Drawing.Point(181, 402);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(167, 152);
+            this.groupBox6.TabIndex = 31;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "groupBox6";
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel6.Controls.Add(this.buttonMostrarJogadores);
+            this.panel6.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panel6.Location = new System.Drawing.Point(0, 1);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(168, 34);
+            this.panel6.TabIndex = 33;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.LightGray;
+            this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.Black;
+            this.button1.Location = new System.Drawing.Point(9, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(142, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Listar Dinossauros";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.textBoxDinossauros);
+            this.groupBox7.Location = new System.Drawing.Point(358, 403);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(171, 152);
+            this.groupBox7.TabIndex = 31;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "groupBox7";
+            // 
+            // panel7
+            // 
+            this.panel7.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel7.Controls.Add(this.button1);
+            this.panel7.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panel7.Location = new System.Drawing.Point(355, 403);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(174, 34);
+            this.panel7.TabIndex = 34;
+            // 
             // Form1
             // 
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -671,6 +758,13 @@ namespace Projeto_Integrador3
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.panel6.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.panel7.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -713,5 +807,12 @@ namespace Projeto_Integrador3
         private GroupBox groupBox4;
         private Panel panel4;
         private Label label12;
+        private Panel panel5;
+        private GroupBox groupBox5;
+        private Button button1;
+        private GroupBox groupBox6;
+        private Panel panel6;
+        private GroupBox groupBox7;
+        private Panel panel7;
     }
 }
