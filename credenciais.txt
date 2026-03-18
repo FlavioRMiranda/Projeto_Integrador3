@@ -22,3 +22,89 @@ ID Partida: 1102
 Senha Partida: 12345
 Data: 17/03/2026 19:59:29
 ----------------------
+===== NOVO REGISTRO =====
+ID Jogador: 1200
+Nome: Flavio2
+Senha Jogador: 674C39
+ID Partida: 1102
+Senha Partida: 12345
+Data: 17/03/2026 20:57:23
+----------------------
+===== NOVO REGISTRO =====
+ID Jogador: 1235
+Nome: Flavio1
+Senha Jogador: 941850
+ID Partida: 1115
+Senha Partida: 12345
+Data: 18/03/2026 10:06:38
+----------------------
+===== NOVO REGISTRO =====
+ID Jogador: 1236
+Nome: Flavio2
+Senha Jogador: 354B41
+ID Partida: 1115
+Senha Partida: 12345
+Data: 18/03/2026 10:07:40
+----------------------
+===== NOVO REGISTRO =====
+ID Jogador: 1237
+Nome: Flavio1
+Senha Jogador: 20F233
+ID Partida: 1116
+Senha Partida: 12345
+Data: 18/03/2026 10:27:53
+----------------------
+===== NOVO REGISTRO =====
+ID Jogador: 1238
+Nome: Flavio2
+Senha Jogador: F54F79
+ID Partida: 1116
+Senha Partida: 12345
+Data: 18/03/2026 10:28:05
+----------------------
+===== NOVO REGISTRO =====
+ID Jogador: 1241
+Nome: Flavio1
+Senha Jogador: AA1734
+ID Partida: 1118
+Senha Partida: 12345
+Data: 18/03/2026 13:24:17
+----------------------
+===== NOVO REGISTRO =====
+ID Jogador: 1242
+Nome: Flavio2
+Senha Jogador: 4F4AE4
+ID Partida: 1118
+Senha Partida: 12345
+Data: 18/03/2026 14:19:06
+----------------------
+===== NOVO REGISTRO =====
+ID Jogador: 1243
+Nome: Flavio1
+Senha Jogador: C1F730
+ID Partida: 1119
+Senha Partida: 12345
+Data: 18/03/2026 14:25:02
+----------------------
+===== NOVO REGISTRO =====
+ID Jogador: 1244
+Nome: Flavio2
+Senha Jogador: E03771
+ID Partida: 1119
+Senha Partida: 12345
+Data: 18/03/2026 14:25:09
+----------------------
+===== NOVO REGISTRO =====
+Nome: Flavio1
+Senha Jogador: 8772FD
+ID Partida: 1120
+Senha Partida: 12345
+Data: 18/03/2026 14:34:14
+----------------------
+===== NOVO REGISTRO =====
+Nome: Flavio2
+Senha Jogador: D5B923
+ID Partida: 1120
+Senha Partida: 12345
+Data: 18/03/2026 14:34:22
+----------------------

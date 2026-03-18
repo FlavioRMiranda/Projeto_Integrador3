@@ -15,6 +15,8 @@ namespace Projeto_Integrador3
         private string GRUPO = "Fossilizados";
         private string jogadorDaVez;
         private string regraAtual;
+        private int idJogador;
+        private string senhaJogador;
 
         public Form1()
         {
@@ -180,15 +182,61 @@ namespace Projeto_Integrador3
         }
 
 
+        // ==========================
+        // JOGAR
+        // ==========================
 
-        private void textBoxIdPartida_TextChanged(object sender, EventArgs e)
+        int Jogar(int idJogador, string senha, string codDino, string codCercado)
         {
+            // Validação ANTES da chamada
+            if (codDino.Length != 2 || codCercado.Length != 2)
+            {
+                MessageBox.Show("Código inválido. Deve ter 2 caracteres.");
+                return -1; // padrão de erro
+            }
 
+            string resposta = Draft.Jogo.Jogar(idJogador, senha, codDino, codCercado);
+
+            int proximoTurno;
+
+            if (int.TryParse(resposta, out proximoTurno))
+            {
+                MessageBox.Show("Jogada realizada! Próximo turno: " + proximoTurno);
+                return proximoTurno;
+            }
+            else
+            {
+                MessageBox.Show("Erro ao jogar: " + resposta);
+                return -1; // erro
+            }
         }
 
-        private void textBoxNomeJogador_TextChanged(object sender, EventArgs e)
+        private void buttonJogar_Click(object sender, EventArgs e)
         {
+            string codDino = textBoxDino.Text.Trim().ToUpper();
+            string codCercado = textBoxCercado.Text.Trim().ToUpper();
 
+            // 🔍 Validação
+            if (codDino.Length != 2 || codCercado.Length != 2)
+            {
+                MessageBox.Show("Os códigos devem ter exatamente 2 caracteres.");
+                return;
+            }
+
+            string resposta = Draft.Jogo.Jogar(idJogador, senhaJogador, codDino, codCercado);
+
+            // 🔄 Tratamento da resposta
+            if (int.TryParse(resposta, out int proximoTurno))
+            {
+                MessageBox.Show("Jogada realizada! Próximo turno: " + proximoTurno);
+
+                // 👉 Aqui você pode atualizar o tabuleiro depois
+                // AtualizarTabuleiro();
+            }
+            else
+            {
+                MessageBox.Show("Erro: " + resposta);
+            }
         }
 
         private void textBoxSenhaPartida_TextChanged(object sender, EventArgs e)
@@ -248,10 +296,10 @@ namespace Projeto_Integrador3
                 }
                 string[] dados = resposta.Split(',');
 
-                string idJogador = dados[0].Trim();
-                string senhaJogador = dados[1].Trim();
-                jogadorDaVez = dados[0];
-                regraAtual = dados[1];
+                idJogador = int.Parse(dados[0].Trim());
+                senhaJogador = dados[1].Trim();
+               // jogadorDaVez = dados[0];
+               // regraAtual = dados[1];
 
                 string caminho = @"C:\Users\FlavioMiranda\source\repos\Projeto_Integrador_BCC\Projeto_Integrador_BCC\Projeto_Integrador3\Projeto_Integrador3\credenciais.txt";
 
@@ -259,7 +307,7 @@ namespace Projeto_Integrador3
 
                 string conteudo =
                     "===== NOVO REGISTRO =====" + Environment.NewLine +
-                    "ID Jogador: " + (idJogador ?? "N/A") + Environment.NewLine +
+                   // "ID Jogador: " + (idJogador ?? "N/A") + Environment.NewLine +
                     "Nome: " + (nomeJogador ?? "N/A") + Environment.NewLine +
                     "Senha Jogador: " + (senhaJogador ?? "N/A") + Environment.NewLine +
                     "ID Partida: " + idPartida + Environment.NewLine +
@@ -482,6 +530,11 @@ namespace Projeto_Integrador3
         }
 
         private void labelPartidas_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
         {
 
         }
