@@ -551,5 +551,25 @@ namespace Projeto_Integrador3
         {
 
         }
+
+        private void labelDino_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+            groupBox1.FlatStyle = FlatStyle.Flat;
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label12_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
