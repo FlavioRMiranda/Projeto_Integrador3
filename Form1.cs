@@ -296,13 +296,13 @@ namespace Projeto_Integrador3
 
                 idJogador = int.Parse(dados[0].Trim());
                 senhaJogador = dados[1].Trim();
-               // jogadorDaVez = dados[0];
-               // regraAtual = dados[1];
+               
+                string caminho = Path.Combine(
+                   Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                       "credenciais.txt"
+                          );
 
-                string caminho = @"C:\Users\FlavioMiranda\source\repos\Projeto_Integrador_BCC\Projeto_Integrador_BCC\Projeto_Integrador3\Projeto_Integrador3\credenciais.txt";
-
-                Directory.CreateDirectory(Path.GetDirectoryName(caminho));
-
+           
                 string conteudo =
                     "===== NOVO REGISTRO =====" + Environment.NewLine +
                    // "ID Jogador: " + (idJogador ?? "N/A") + Environment.NewLine +
