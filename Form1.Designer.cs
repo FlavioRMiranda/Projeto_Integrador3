@@ -52,10 +52,10 @@ namespace Projeto_Integrador3
             this.listBoxJogadores = new System.Windows.Forms.ListBox();
             this.buttonEntrarPartida = new System.Windows.Forms.Button();
             this.buttonListarPartidas = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.senhaPartida = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.nomeJogador = new System.Windows.Forms.TextBox();
             this.buttonVersao = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.labelNome = new System.Windows.Forms.Label();
@@ -338,14 +338,15 @@ namespace Projeto_Integrador3
             this.buttonListarPartidas.UseVisualStyleBackColor = false;
             this.buttonListarPartidas.Click += new System.EventHandler(this.buttonListarPartidas_Click);
             // 
-            // textBox3
+            // senhaPartida
             // 
-            this.textBox3.Location = new System.Drawing.Point(139, 128);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(98, 22);
-            this.textBox3.TabIndex = 4;
-            this.textBox3.UseSystemPasswordChar = true;
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            this.senhaPartida.AcceptsReturn = true;
+            this.senhaPartida.Location = new System.Drawing.Point(139, 128);
+            this.senhaPartida.Name = "senhaPartida";
+            this.senhaPartida.Size = new System.Drawing.Size(98, 22);
+            this.senhaPartida.TabIndex = 4;
+            this.senhaPartida.UseSystemPasswordChar = true;
+            this.senhaPartida.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // label3
             // 
@@ -369,13 +370,13 @@ namespace Projeto_Integrador3
             this.label2.Text = "Nome do jogador";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // textBox2
+            // nomeJogador
             // 
-            this.textBox2.Location = new System.Drawing.Point(139, 84);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(98, 22);
-            this.textBox2.TabIndex = 3;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.nomeJogador.Location = new System.Drawing.Point(139, 84);
+            this.nomeJogador.Name = "nomeJogador";
+            this.nomeJogador.Size = new System.Drawing.Size(98, 22);
+            this.nomeJogador.TabIndex = 3;
+            this.nomeJogador.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // buttonVersao
             // 
@@ -552,9 +553,9 @@ namespace Projeto_Integrador3
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.textBoxIdPartida);
             this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.textBox2);
+            this.groupBox3.Controls.Add(this.nomeJogador);
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.textBox3);
+            this.groupBox3.Controls.Add(this.senhaPartida);
             this.groupBox3.Controls.Add(this.buttonEntrarPartida);
             this.groupBox3.Location = new System.Drawing.Point(277, 12);
             this.groupBox3.Name = "groupBox3";
@@ -760,8 +761,8 @@ namespace Projeto_Integrador3
         }
 
         private TextBox textBoxIdPartida;
-        private TextBox textBox2;
-        private TextBox textBox3;
+        private TextBox nomeJogador;
+        private TextBox senhaPartida;
         private Label label1;
         private Label label2;
         private Label label3;

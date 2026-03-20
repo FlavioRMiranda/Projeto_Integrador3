@@ -14,6 +14,7 @@ namespace Projeto_Integrador3
         private string senhaJogadorAtual;
         private string GRUPO = "Fossilizados";
         private string jogadorDaVez;
+        private string nomeJogadorDaVez;
         private string regraAtual;
         private int idJogador;
         private string senhaJogador;
@@ -273,8 +274,8 @@ namespace Projeto_Integrador3
                     return;
                 }
 
-                string nomeJogador = textBox2.Text.Trim();
-                string senhaPartida = textBox3.Text;
+                string nomeJogador = this.nomeJogador.Text.Trim();
+                string senhaPartida = this.senhaPartida.Text;
 
                 if (nomeJogador.Length == 0 || nomeJogador.Length > 20)
                 {
@@ -390,7 +391,26 @@ namespace Projeto_Integrador3
 
         }
 
-     
+        private string obternomeJogadorporid(string id, ListBox listboxjogadores)
+        {
+            foreach (var item in listboxjogadores.Items)
+            {
+                string linha = item.ToString();
+                string[] partes = linha.Split(',');
+
+                if (partes.Length >= 2)
+                {
+                    string idlista = partes[0].Trim();
+                    string nome = partes[1].Trim();
+
+                    if (idlista == id)
+                        return nome;
+                }
+            }
+
+            return "desconhecido";
+        }
+
         private void buttonIniciarPartida_Click(object sender, EventArgs e)
         {
             if (listBoxJogadores.SelectedItem == null)
@@ -432,14 +452,17 @@ namespace Projeto_Integrador3
 
                 string[] dados = resultado.Split(',');
 
-                jogadorDaVez = dados[0];
+                Console.WriteLine($"Linha selecionada: '{linhaJogador}'");
+                Console.WriteLine($"ID convertido: {idJogador}");
+
+                string idJogadorDaVez = dados[0];
+                nomeJogadorDaVez = obternomeJogadorporid(idJogadorDaVez, listBoxJogadores);
+                jogadorDaVez = nomeJogadorDaVez;
                 regraAtual = dados[1];
 
                 labelJogadorDaVez.Text = "Jogador da vez: " + jogadorDaVez;
                 labelDado.Text = "Dado: " + regraAtual;
 
-                // (opcional, mas útil pra debug)
-                MessageBox.Show(resultado, "Resultado da Partida");
 
 
 
@@ -473,6 +496,8 @@ namespace Projeto_Integrador3
             }
         }
 
+
+       
         private void labelSenhaJogador_Click(object sender, EventArgs e)
         {
 
