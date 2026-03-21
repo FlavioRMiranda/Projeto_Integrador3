@@ -222,6 +222,42 @@ namespace Projeto_Integrador3
                 return;
             }
 
+            // Validação de acordo com a regra (Face do Dado)
+            if (regraAtual == "FL") // Floresta (Parte de Cima)
+            {
+                // Cercados da parte de cima: Floresta da Igualdade (FI), Rei da Selva (RS)
+                if (codCercado != "FI" && codCercado != "RS" && codCercado != "MT" && codCercado != "IS")
+                {
+                    MessageBox.Show("Jogada Inválida! O dado mandou jogar na Floresta (Parte de cima do tabuleiro).");
+                    return; // Cancela o envio
+                }
+            }
+            else if (regraAtual == "PR") // Pradaria (Parte de Baixo)
+            {
+                // Cercados da parte de baixo: Pradaria do Amor (PA), Campina da Diferença (CD)
+                if (codCercado != "PA" && codCercado != "CD" && codCercado != "RS")
+                {
+                    MessageBox.Show("Jogada Inválida! O dado mandou jogar na Pradaria (Parte de baixo do tabuleiro).");
+                    return;
+                }
+            }
+            else if (regraAtual == "AL") // Praça de Alimentação (Lado Esquerdo)
+            {
+                if (codCercado != "FI" && codCercado != "MT" && codCercado != "PA")
+                {
+                    MessageBox.Show("Jogada Inválida! O dado mandou jogar na Praça de Alimentação (Lado esquerdo).");
+                    return;
+                }
+            }
+            else if (regraAtual == "WC") // Banheiros (Lado Direito)
+            {
+                if (codCercado != "IS" && codCercado != "CD" && codCercado != "RS")
+                {
+                    MessageBox.Show("Jogada Inválida! O dado mandou jogar nos Banheiros (Lado direito).");
+                    return;
+                }
+            }
+
             string resposta = Draft.Jogo.Jogar(idJogador, senhaJogador, codDino, codCercado);
 
             // 🔄 Tratamento da resposta
@@ -229,8 +265,12 @@ namespace Projeto_Integrador3
             {
                 MessageBox.Show("Jogada realizada! Próximo turno: " + proximoTurno);
 
-                // 👉 Aqui você pode atualizar o tabuleiro depois
-                // AtualizarTabuleiro();
+                // 👉 Atualiza o tabuleiro na tela logo após a jogada dar certo
+                string meuTabuleiro = Draft.Jogo.ExibirTabuleiro(idJogador, senhaJogador);
+
+                // Limpa a caixa e joga o texto novo que veio do servidor
+                textBoxTabuleiro.Clear();
+                textBoxTabuleiro.Text = meuTabuleiro.Replace("\n", Environment.NewLine);
             }
             else
             {
@@ -411,6 +451,20 @@ namespace Projeto_Integrador3
             return "desconhecido";
         }
 
+        private string TraduzirDado(string sigla)
+        {
+            switch (sigla)
+            {
+                case "AL": return "Praça de Alimentação";
+                case "FL": return "Floresta";
+                case "PR": return "Pradaria";
+                case "TI": return "Tiranossauro Rex";
+                case "VZ": return "Cercado Vazio";
+                case "WC": return "Banheiros";
+                default: return sigla; // Se der erro, mostra a sigla mesmo
+            }
+        }
+
         private void buttonIniciarPartida_Click(object sender, EventArgs e)
         {
             if (listBoxJogadores.SelectedItem == null)
@@ -455,39 +509,25 @@ namespace Projeto_Integrador3
                 Console.WriteLine($"Linha selecionada: '{linhaJogador}'");
                 Console.WriteLine($"ID convertido: {idJogador}");
 
-                string idJogadorDaVez = dados[0];
-                nomeJogadorDaVez = obternomeJogadorporid(idJogadorDaVez, listBoxJogadores);
-                jogadorDaVez = nomeJogadorDaVez;
-                regraAtual = dados[1];
-
-                labelJogadorDaVez.Text = "Jogador da vez: " + jogadorDaVez;
-                labelDado.Text = "Dado: " + regraAtual;
+                
 
 
 
 
-                // Lista os dinossauros do jogo
-                string listaDinos = Draft.Jogo.ListarDinossauros(true);
+                // Puxa apenas os dinossauros da mão do jogador
+                string cartasNaMao = Draft.Jogo.ExibirMao(idJogador, senha);
 
-                // Limpa o TextBox
+                // Limpa o TextBox antigo
                 textBoxDinossauros.Clear();
 
-                // Separa cada linha
-                string[] linhas = listaDinos.Split('\n');
-                foreach (string linha in linhas)
+                // Separa as linhas enviadas pela DLL e exibe na tela
+                string[] linhasMao = cartasNaMao.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (string linhaMao in linhasMao)
                 {
-                    if (!string.IsNullOrWhiteSpace(linha))
-                    {
-                        // Pega o nome do dinossauro (segunda posição)
-                        string[] partes = linha.Split(',');
-                        if (partes.Length >= 2)
-                        {
-                            string nomeDino = partes[1].Trim();
-                            textBoxDinossauros.AppendText(nomeDino + Environment.NewLine);
-                        }
-                    }
+                    textBoxDinossauros.AppendText(linhaMao + Environment.NewLine);
                 }
-        
+
 
             }
             catch (Exception ex)
@@ -603,6 +643,92 @@ namespace Projeto_Integrador3
         }
 
         private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Puxa a mão usando o ID e Senha que já estão salvos na memória do seu form
+                string cartasNaMao = Draft.Jogo.ExibirMao(idJogador, senhaJogador);
+
+                // Limpa a caixa de texto dos dinossauros
+                textBoxDinossauros.Clear();
+
+                // Separa as linhas e joga na tela
+                string[] linhasMao = cartasNaMao.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (string linha in linhasMao)
+                {
+                    textBoxDinossauros.AppendText(linha + Environment.NewLine);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao exibir a mão: " + ex.Message);
+            }
+        }
+
+        private void label13_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            // 1. Uma trava de segurança: O timer só funciona se você tiver selecionado uma partida
+            if (listBoxPartidas.SelectedItem != null)
+            {
+                try
+                {
+                    // Pega o ID da partida que está selecionada na lista
+                    int idPartidaSelecionada = int.Parse(listBoxPartidas.SelectedItem.ToString().Split('-')[0].Trim());
+
+                    // Pergunta pro servidor: "Como está a partida agora?"
+                    string statusPartida = Draft.Jogo.VerificarPartida(idPartidaSelecionada);
+                    string[] dadosPartida = statusPartida.Split(',');
+
+                    // Só tenta atualizar se o servidor devolver a resposta completa (evita crash)
+                    if (dadosPartida.Length >= 5)
+                    {
+                        // Atualiza o Turno (Posição 1)
+                        string turnoAtual = dadosPartida[1];
+                        labelTurno.Text = "Turno: " + turnoAtual;
+
+                        // Atualiza o Dono do Dado (Posição 3) e Traduz o Dado (Posição 4)
+                        string idJogadorDado = dadosPartida[3];
+                        string faceDado = dadosPartida[4].Trim();
+                        regraAtual = faceDado; // Já vamos salvar na memória limpinho, porque vamos usar essa regra nos IFs agora!
+
+                        string nomeJogadorDado = obternomeJogadorporid(idJogadorDado, listBoxJogadores);
+
+                        // O TRUQUE MÁGICO AQUI: 
+                        // Se o código não conhecer o jogador, ele aperta o botão "Mostrar Jogadores" sozinho por trás dos panos e procura de novo!
+                        if (nomeJogadorDado == "desconhecido")
+                        {
+                            ExibirJogadores(idPartidaSelecionada); // Atualiza a lista
+                            nomeJogadorDado = obternomeJogadorporid(idJogadorDado, listBoxJogadores); // Tenta achar o nome de novo
+                        }
+
+                        labelJogadorDaVez.Text = "Jogador da vez: " + nomeJogadorDado;
+                        labelDado.Text = "Dado: " + TraduzirDado(faceDado);
+                    }
+                }
+                catch
+                {
+                    // Deixamos vazio de propósito. Se a internet piscar, o jogo não trava, ele só tenta de novo 2 segundos depois!
+                }
+            }
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint_1(object sender, PaintEventArgs e)
         {
 
         }
