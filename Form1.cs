@@ -268,7 +268,7 @@ namespace Projeto_Integrador3
                 // 👉 Atualiza o tabuleiro na tela logo após a jogada dar certo
                 string meuTabuleiro = Draft.Jogo.ExibirTabuleiro(idJogador, senhaJogador);
 
-                // Limpa a caixa e joga o texto novo que veio do servidor
+                // Limpa a caixa e joga o texto original do servidor pulando as linhas corretamente
                 textBoxTabuleiro.Clear();
                 textBoxTabuleiro.Text = meuTabuleiro.Replace("\n", Environment.NewLine);
             }
@@ -729,6 +729,11 @@ namespace Projeto_Integrador3
         }
 
         private void panel1_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textBoxTabuleiro_TextChanged(object sender, EventArgs e)
         {
 
         }
