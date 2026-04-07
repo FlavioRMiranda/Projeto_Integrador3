@@ -1,0 +1,6 @@
+Tarefas:
+
+>> 11/mar: Listar Partidas - Feito
+>> 21/mar: Exibir jogadores, entrar na partida, exibir a mão, tratar erros retornados - Feito
+>> 29/mar: Exibir o nome do jogador que lançou o dado; exibir o valor do dado sorteado; enviar uma jogada (colocar um dinossauro em um cercado) - Feito
+>> 12/abr: Exibir **graficamente** os dinossauros nos cercados, e os que estão na sua mão - FAZENDO

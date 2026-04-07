@@ -1,8 +1,10 @@
-﻿using Draft;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Draft;
 
 namespace Projeto_Integrador3
 {
@@ -23,6 +25,35 @@ namespace Projeto_Integrador3
         {
             InitializeComponent();
             labelGrupo.Text = GRUPO;
+            CriarPaineisJogadores();
+        }
+
+        private void CriarPaineisJogadores()
+        {
+            flowJogador1 = CriarPainel(60, 60);
+            flowJogador2 = CriarPainel(60, 140);
+            flowJogador3 = CriarPainel(60, 220);
+            flowJogador4 = CriarPainel(60, 300);
+            flowJogador5 = CriarPainel(60, 380);
+            flowJogador6 = CriarPainel(60, 460);
+            pictureBoxTabuleiro.Controls.Add(flowJogador1);
+            pictureBoxTabuleiro.Controls.Add(flowJogador2);
+            pictureBoxTabuleiro.Controls.Add(flowJogador3);
+            pictureBoxTabuleiro.Controls.Add(flowJogador4);
+            pictureBoxTabuleiro.Controls.Add(flowJogador5);
+            pictureBoxTabuleiro.Controls.Add(flowJogador6);
+        }
+
+        private FlowLayoutPanel CriarPainel(int x, int y)
+        {
+            FlowLayoutPanel painel = new FlowLayoutPanel();
+            painel.Location = new Point(x, y);
+            painel.Size = new Size(220, 55);
+            painel.BackColor = Color.FromArgb(180, Color.White);
+            painel.WrapContents = false;
+            painel.AutoScroll = true;
+            painel.BringToFront();
+            return painel;
         }
 
         // ==========================
@@ -35,12 +66,30 @@ namespace Projeto_Integrador3
                 Width = 300,
                 Height = 150,
                 Text = caption,
-                StartPosition = FormStartPosition.CenterScreen
+                StartPosition = FormStartPosition.CenterScreen,
             };
 
-            Label textLabel = new Label() { Left = 10, Top = 20, Text = text, AutoSize = true };
-            TextBox inputBox = new TextBox() { Left = 10, Top = 50, Width = 260 };
-            Button confirmation = new Button() { Text = "OK", Left = 200, Width = 70, Top = 80, DialogResult = DialogResult.OK };
+            Label textLabel = new Label()
+            {
+                Left = 10,
+                Top = 20,
+                Text = text,
+                AutoSize = true,
+            };
+            TextBox inputBox = new TextBox()
+            {
+                Left = 10,
+                Top = 50,
+                Width = 260,
+            };
+            Button confirmation = new Button()
+            {
+                Text = "OK",
+                Left = 200,
+                Width = 70,
+                Top = 80,
+                DialogResult = DialogResult.OK,
+            };
 
             prompt.Controls.Add(textLabel);
             prompt.Controls.Add(inputBox);
@@ -51,11 +100,11 @@ namespace Projeto_Integrador3
             return prompt.ShowDialog() == DialogResult.OK ? inputBox.Text : "";
         }
 
-        
         private void buttonEquipe_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Equipe: SeuNomeOuGrupo");
         }
+
         private void buttonVersao_Click(object sender, EventArgs e)
         {
             try
@@ -70,7 +119,29 @@ namespace Projeto_Integrador3
             }
         }
 
+        private string CaminhoImagemDino(string nomeArquivo)
+        {
+            return Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Assets",
+                "Dinos",
+                nomeArquivo
+            );
+        }
 
+        private Dictionary<string, string> imagensDinos = new Dictionary<string, string>()
+        {
+            { "BR", "DinoRosa.jpg" }, // Braquiossauro (roxo -> usa rosa)
+            { "EP", "DinoLaranja.jpg" }, // Espinossauro
+            { "ET", "DinoAzul.jpg" }, // Estegossauro
+            { "PA", "DinoVerde.jpg" }, // Parasaurolófo
+            { "TI", "DinoVermelho.jpg" }, // Tiranossauro
+            { "TR", "DinoAmarelo.jpg" }, // Tricerátops
+        };
+
+        private Dictionary<int, FlowLayoutPanel> painelPorJogador =
+            new Dictionary<int, FlowLayoutPanel>();
+        private Dictionary<int, string> senhaPorJogador = new Dictionary<int, string>();
 
         // ==========================
         // CRIAR PARTIDA
@@ -138,7 +209,10 @@ namespace Projeto_Integrador3
             Console.WriteLine(partidasAbertas);
 
             string resposta = Jogo.ListarPartidas("T");
-            string[] linhas = resposta.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            string[] linhas = resposta.Split(
+                new[] { "\r\n", "\n" },
+                StringSplitOptions.RemoveEmptyEntries
+            );
 
             foreach (string linha in linhas)
             {
@@ -154,32 +228,25 @@ namespace Projeto_Integrador3
                         string status = partes[3].Trim();
 
                         // Tradução do status
-                        string descricaoStatus = status == "A" ? "Aberta" :
-                                                 status == "E" ? "Encerrada" :
-                                                 status == "J" ? "Jogando" :
-                                                 status;
+                        string descricaoStatus =
+                            status == "A" ? "Aberta"
+                            : status == "E" ? "Encerrada"
+                            : status == "J" ? "Jogando"
+                            : status;
 
-                        listBoxPartidas.Items.Add(
-                            $"{id} - {nome} ({descricaoStatus})"
-                        );
+                        listBoxPartidas.Items.Add($"{id} - {nome} ({descricaoStatus})");
                     }
                 }
             }
         }
-
-
 
         // ==========================
         // LISTAR  PARTIDAS
         // ==========================
         private void buttonListarPartidas_Click(object sender, EventArgs e)
         {
-           
-
-                AtualizarListaPartidas();
-          
+            AtualizarListaPartidas();
         }
-
 
         // ==========================
         // JOGAR
@@ -226,9 +293,16 @@ namespace Projeto_Integrador3
             if (regraAtual == "FL") // Floresta (Parte de Cima)
             {
                 // Cercados da parte de cima: Floresta da Igualdade (FI), Rei da Selva (RS)
-                if (codCercado != "FI" && codCercado != "RS" && codCercado != "MT" && codCercado != "IS")
+                if (
+                    codCercado != "FI"
+                    && codCercado != "RS"
+                    && codCercado != "MT"
+                    && codCercado != "IS"
+                )
                 {
-                    MessageBox.Show("Jogada Inválida! O dado mandou jogar na Floresta (Parte de cima do tabuleiro).");
+                    MessageBox.Show(
+                        "Jogada Inválida! O dado mandou jogar na Floresta (Parte de cima do tabuleiro)."
+                    );
                     return; // Cancela o envio
                 }
             }
@@ -237,7 +311,9 @@ namespace Projeto_Integrador3
                 // Cercados da parte de baixo: Pradaria do Amor (PA), Campina da Diferença (CD)
                 if (codCercado != "PA" && codCercado != "CD" && codCercado != "RS")
                 {
-                    MessageBox.Show("Jogada Inválida! O dado mandou jogar na Pradaria (Parte de baixo do tabuleiro).");
+                    MessageBox.Show(
+                        "Jogada Inválida! O dado mandou jogar na Pradaria (Parte de baixo do tabuleiro)."
+                    );
                     return;
                 }
             }
@@ -245,7 +321,9 @@ namespace Projeto_Integrador3
             {
                 if (codCercado != "FI" && codCercado != "MT" && codCercado != "PA")
                 {
-                    MessageBox.Show("Jogada Inválida! O dado mandou jogar na Praça de Alimentação (Lado esquerdo).");
+                    MessageBox.Show(
+                        "Jogada Inválida! O dado mandou jogar na Praça de Alimentação (Lado esquerdo) -> 'FI' ou 'MT' ou 'PA'."
+                    );
                     return;
                 }
             }
@@ -253,7 +331,9 @@ namespace Projeto_Integrador3
             {
                 if (codCercado != "IS" && codCercado != "CD" && codCercado != "RS")
                 {
-                    MessageBox.Show("Jogada Inválida! O dado mandou jogar nos Banheiros (Lado direito).");
+                    MessageBox.Show(
+                        "Jogada Inválida! O dado mandou jogar nos Banheiros (Lado direito)."
+                    );
                     return;
                 }
             }
@@ -278,31 +358,17 @@ namespace Projeto_Integrador3
             }
         }
 
-        private void textBoxSenhaPartida_TextChanged(object sender, EventArgs e)
-        {
+        private void textBoxSenhaPartida_TextChanged(object sender, EventArgs e) { }
 
-        }
+        private void label3_Click(object sender, EventArgs e) { }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
+        private void label2_Click(object sender, EventArgs e) { }
 
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        private void label1_Click(object sender, EventArgs e) { }
 
         // ==========================
         // ENTRAR EM UMA  PARTIDA
         // ==========================
-
 
         private void buttonEntrarPartida_Click(object sender, EventArgs e)
         {
@@ -330,29 +396,45 @@ namespace Projeto_Integrador3
 
                 if (resposta.StartsWith("ERRO"))
                 {
-                   MessageBox.Show(resposta);
+                    MessageBox.Show(resposta);
                     return;
                 }
                 string[] dados = resposta.Split(',');
 
                 idJogador = int.Parse(dados[0].Trim());
                 senhaJogador = dados[1].Trim();
-               
-                string caminho = Path.Combine(
-                   Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                       "credenciais.txt"
-                          );
 
-           
+                senhaPorJogador[idJogador] = senhaJogador;
+                ExibirJogadores(idPartida);
+                RegistrarJogadoresNosPaineis();
+                AtualizarMaosDeTodos();
+                string caminho = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    "credenciais.txt"
+                );
+
                 string conteudo =
-                    "===== NOVO REGISTRO =====" + Environment.NewLine +
-                   // "ID Jogador: " + (idJogador ?? "N/A") + Environment.NewLine +
-                    "Nome: " + (nomeJogador ?? "N/A") + Environment.NewLine +
-                    "Senha Jogador: " + (senhaJogador ?? "N/A") + Environment.NewLine +
-                    "ID Partida: " + idPartida + Environment.NewLine +
-                    "Senha Partida: " + (senhaPartida ?? "N/A") + Environment.NewLine +
-                    "Data: " + DateTime.Now + Environment.NewLine +
-                    "----------------------" + Environment.NewLine;
+                    "===== NOVO REGISTRO ====="
+                    + Environment.NewLine
+                    +
+                    // "ID Jogador: " + (idJogador ?? "N/A") + Environment.NewLine +
+                    "Nome: "
+                    + (nomeJogador ?? "N/A")
+                    + Environment.NewLine
+                    + "Senha Jogador: "
+                    + (senhaJogador ?? "N/A")
+                    + Environment.NewLine
+                    + "ID Partida: "
+                    + idPartida
+                    + Environment.NewLine
+                    + "Senha Partida: "
+                    + (senhaPartida ?? "N/A")
+                    + Environment.NewLine
+                    + "Data: "
+                    + DateTime.Now
+                    + Environment.NewLine
+                    + "----------------------"
+                    + Environment.NewLine;
 
                 File.AppendAllText(caminho, conteudo);
 
@@ -375,15 +457,51 @@ namespace Projeto_Integrador3
             string jogadoresStr = Draft.Jogo.ListarJogadores(idPartida);
 
             // Cada linha da string vira um item no ListBox
-            foreach (var linha in jogadoresStr.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (
+                var linha in jogadoresStr.Split(
+                    new[] { Environment.NewLine },
+                    StringSplitOptions.RemoveEmptyEntries
+                )
+            )
             {
                 listBoxJogadores.Items.Add(linha);
             }
         }
 
+        private void RegistrarJogadoresNosPaineis()
+        {
+            painelPorJogador.Clear();
+
+            FlowLayoutPanel[] paineis =
+            {
+                flowJogador1,
+                flowJogador2,
+                flowJogador3,
+                flowJogador4,
+                flowJogador5,
+                flowJogador6,
+            };
+            int indice = 0;
+            foreach (var item in listBoxJogadores.Items)
+            {
+                if (indice >= 6)
+                    break;
+                string linha = item.ToString();
+                string[] partes = linha.Split(',');
+
+                if (partes.Length >= 2)
+                {
+                    int id = int.Parse(partes[0].Trim());
+                    painelPorJogador[id] = paineis[indice];
+                    indice++;
+                }
+            }
+        }
+
         private void listBoxPartidas_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBoxPartidas.SelectedItem == null) return;
+            if (listBoxPartidas.SelectedItem == null)
+                return;
 
             // Pegando o Id da partida selecionada
             int idPartida = int.Parse(listBoxPartidas.SelectedItem.ToString().Split('-')[0].Trim());
@@ -392,25 +510,13 @@ namespace Projeto_Integrador3
             ExibirJogadores(idPartida);
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
+        private void textBox2_TextChanged(object sender, EventArgs e) { }
 
-        }
+        private void labelNome_Click(object sender, EventArgs e) { }
 
-        private void labelNome_Click(object sender, EventArgs e)
-        {
+        private void labelSenha_Click(object sender, EventArgs e) { }
 
-        }
-
-        private void labelSenha_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxGrupoPartida_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+        private void textBoxGrupoPartida_TextChanged(object sender, EventArgs e) { }
 
         private void buttonMostrarJogadores_Click(object sender, EventArgs e)
         {
@@ -421,15 +527,12 @@ namespace Projeto_Integrador3
             }
 
             string linha = listBoxPartidas.SelectedItem.ToString(); // "1 - Teste"
-            int idPartida = int.Parse(linha.Split('-')[0].Trim());  // Extrai o Id
+            int idPartida = int.Parse(linha.Split('-')[0].Trim()); // Extrai o Id
 
             ExibirJogadores(idPartida);
         }
 
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void label4_Click(object sender, EventArgs e) { }
 
         private string obternomeJogadorporid(string id, ListBox listboxjogadores)
         {
@@ -455,13 +558,86 @@ namespace Projeto_Integrador3
         {
             switch (sigla)
             {
-                case "AL": return "Praça de Alimentação";
-                case "FL": return "Floresta";
-                case "PR": return "Pradaria";
-                case "TI": return "Tiranossauro Rex";
-                case "VZ": return "Cercado Vazio";
-                case "WC": return "Banheiros";
-                default: return sigla; // Se der erro, mostra a sigla mesmo
+                case "AL":
+                    return "Praça de Alimentação";
+                case "FL":
+                    return "Floresta";
+                case "PR":
+                    return "Pradaria";
+                case "TI":
+                    return "Tiranossauro Rex";
+                case "VZ":
+                    return "Cercado Vazio";
+                case "WC":
+                    return "Banheiros";
+                default:
+                    return sigla; // Se der erro, mostra a sigla mesmo
+            }
+        }
+
+        private string ExtrairCodigoDino(string linha)
+        {
+            if (string.IsNullOrWhiteSpace(linha))
+                return null;
+
+            linha = linha.Trim();
+
+            if (linha.Length >= 2)
+                return linha.Substring(0, 2).ToUpper();
+
+            return null;
+        }
+
+        private void RenderizarMaoJogador(int idJogador, string cartasNaMao)
+        {
+            if (
+                !painelPorJogador.TryGetValue(idJogador, out FlowLayoutPanel painel)
+                || painel == null
+            )
+                return;
+
+            painel.Controls.Clear();
+
+            string[] linhas = cartasNaMao.Split(
+                new[] { '\r', '\n' },
+                StringSplitOptions.RemoveEmptyEntries
+            );
+
+            foreach (string linha in linhas)
+            {
+                string codigo = ExtrairCodigoDino(linha);
+
+                if (codigo == null || !imagensDinos.ContainsKey(codigo))
+                    continue;
+
+                string caminho = CaminhoImagemDino(imagensDinos[codigo]);
+
+                if (!File.Exists(caminho))
+                    continue;
+
+                PictureBox pb = new PictureBox();
+                pb.Width = 46;
+                pb.Height = 46;
+                pb.SizeMode = PictureBoxSizeMode.StretchImage;
+                pb.Image = new Bitmap(caminho);
+
+                painel.Controls.Add(pb);
+            }
+        }
+
+        private void AtualizarMaosDeTodos()
+        {
+            foreach (var par in senhaPorJogador)
+            {
+                int id = par.Key;
+                string senha = par.Value;
+
+                try
+                {
+                    string cartasNaMao = Draft.Jogo.ExibirMao(id, senha);
+                    RenderizarMaoJogador(id, cartasNaMao);
+                }
+                catch { }
             }
         }
 
@@ -475,7 +651,7 @@ namespace Projeto_Integrador3
 
             // Extrai o Id do jogador da linha selecionada
             string linhaJogador = listBoxJogadores.SelectedItem.ToString();
-            int idJogador = int.Parse(linhaJogador.Split(',')[0].Trim());
+            int idJogadorSelecionado = int.Parse(linhaJogador.Split(',')[0].Trim());
 
             // Pede a senha do jogador
             // string senha = Microsoft.VisualBasic.Interaction.InputBox("Digite a senha do jogador:", "Senha do jogador", "");
@@ -486,17 +662,18 @@ namespace Projeto_Integrador3
                 return;
             }
             senha = senha.Trim().ToUpper();
+            this.idJogador = idJogadorSelecionado;
+            this.senhaJogador = senha;
+
             Console.WriteLine($"Linha selecionada: '{linhaJogador}'");
             Console.WriteLine($"ID convertido: {idJogador}");
             Console.WriteLine($"Senha após Trim: '{senha.Trim()}'");
-
 
             Console.WriteLine($"ID: {idJogador}, Senha digitada: '{senha}' ({senha.Length} chars)");
             foreach (char c in senha)
             {
                 Console.WriteLine($"Char: '{c}'  Código: {(int)c}");
             }
-
 
             try
             {
@@ -509,11 +686,6 @@ namespace Projeto_Integrador3
                 Console.WriteLine($"Linha selecionada: '{linhaJogador}'");
                 Console.WriteLine($"ID convertido: {idJogador}");
 
-                
-
-
-
-
                 // Puxa apenas os dinossauros da mão do jogador
                 string cartasNaMao = Draft.Jogo.ExibirMao(idJogador, senha);
 
@@ -521,14 +693,16 @@ namespace Projeto_Integrador3
                 textBoxDinossauros.Clear();
 
                 // Separa as linhas enviadas pela DLL e exibe na tela
-                string[] linhasMao = cartasNaMao.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] linhasMao = cartasNaMao.Split(
+                    new[] { '\r', '\n' },
+                    StringSplitOptions.RemoveEmptyEntries
+                );
 
                 foreach (string linhaMao in linhasMao)
                 {
                     textBoxDinossauros.AppendText(linhaMao + Environment.NewLine);
                 }
-
-
+                AtualizarMaosDeTodos();
             }
             catch (Exception ex)
             {
@@ -536,17 +710,9 @@ namespace Projeto_Integrador3
             }
         }
 
+        private void labelSenhaJogador_Click(object sender, EventArgs e) { }
 
-       
-        private void labelSenhaJogador_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void labelIdJogador_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void labelIdJogador_Click(object sender, EventArgs e) { }
 
         private void listBoxJogadores_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -559,93 +725,45 @@ namespace Projeto_Integrador3
 
             string idJogador = dados[0];
 
-            labelIdJogador.Text = "ID Jogador: " + idJogador;   
+            labelIdJogador.Text = "ID Jogador: " + idJogador;
         }
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
+        private void textBox3_TextChanged(object sender, EventArgs e) { }
 
-        }
+        private void textBoxDinossauros_SelectedIndexChanged(object sender, EventArgs e) { }
 
-        private void textBoxDinossauros_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void textBox1_TextChanged(object sender, EventArgs e) { }
 
-        }
+        private void labelGrupo_Click(object sender, EventArgs e) { }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
+        private void pictureBox1_Click(object sender, EventArgs e) { }
 
-        }
+        private void textBoxSenhaPartida_TextChanged_1(object sender, EventArgs e) { }
 
-        private void labelGrupo_Click(object sender, EventArgs e)
-        {
+        private void labelPartidas_Click(object sender, EventArgs e) { }
 
-        }
+        private void label6_Click(object sender, EventArgs e) { }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
+        private void groupBoxPartida_Enter(object sender, EventArgs e) { }
 
-        }
+        private void panel1_Paint(object sender, PaintEventArgs e) { }
 
-        private void textBoxSenhaPartida_TextChanged_1(object sender, EventArgs e)
-        {
+        private void label4_Click_1(object sender, EventArgs e) { }
 
-        }
-
-        private void labelPartidas_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBoxPartida_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label4_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void labelDino_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void labelDino_Click(object sender, EventArgs e) { }
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
             groupBox1.FlatStyle = FlatStyle.Flat;
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
+        private void textBox4_TextChanged(object sender, EventArgs e) { }
 
-        }
+        private void label12_Click(object sender, EventArgs e) { }
 
-        private void label12_Click(object sender, EventArgs e)
-        {
+        private void label13_Click(object sender, EventArgs e) { }
 
-        }
-
-        private void label13_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void label11_Click(object sender, EventArgs e) { }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -658,7 +776,10 @@ namespace Projeto_Integrador3
                 textBoxDinossauros.Clear();
 
                 // Separa as linhas e joga na tela
-                string[] linhasMao = cartasNaMao.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] linhasMao = cartasNaMao.Split(
+                    new[] { '\r', '\n' },
+                    StringSplitOptions.RemoveEmptyEntries
+                );
 
                 foreach (string linha in linhasMao)
                 {
@@ -671,10 +792,7 @@ namespace Projeto_Integrador3
             }
         }
 
-        private void label13_Click_1(object sender, EventArgs e)
-        {
-
-        }
+        private void label13_Click_1(object sender, EventArgs e) { }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -684,7 +802,9 @@ namespace Projeto_Integrador3
                 try
                 {
                     // Pega o ID da partida que está selecionada na lista
-                    int idPartidaSelecionada = int.Parse(listBoxPartidas.SelectedItem.ToString().Split('-')[0].Trim());
+                    int idPartidaSelecionada = int.Parse(
+                        listBoxPartidas.SelectedItem.ToString().Split('-')[0].Trim()
+                    );
 
                     // Pergunta pro servidor: "Como está a partida agora?"
                     string statusPartida = Draft.Jogo.VerificarPartida(idPartidaSelecionada);
@@ -702,14 +822,20 @@ namespace Projeto_Integrador3
                         string faceDado = dadosPartida[4].Trim();
                         regraAtual = faceDado; // Já vamos salvar na memória limpinho, porque vamos usar essa regra nos IFs agora!
 
-                        string nomeJogadorDado = obternomeJogadorporid(idJogadorDado, listBoxJogadores);
+                        string nomeJogadorDado = obternomeJogadorporid(
+                            idJogadorDado,
+                            listBoxJogadores
+                        );
 
-                        // O TRUQUE MÁGICO AQUI: 
+                        // O TRUQUE MÁGICO AQUI:
                         // Se o código não conhecer o jogador, ele aperta o botão "Mostrar Jogadores" sozinho por trás dos panos e procura de novo!
                         if (nomeJogadorDado == "desconhecido")
                         {
                             ExibirJogadores(idPartidaSelecionada); // Atualiza a lista
-                            nomeJogadorDado = obternomeJogadorporid(idJogadorDado, listBoxJogadores); // Tenta achar o nome de novo
+                            nomeJogadorDado = obternomeJogadorporid(
+                                idJogadorDado,
+                                listBoxJogadores
+                            ); // Tenta achar o nome de novo
                         }
 
                         labelJogadorDaVez.Text = "Jogador da vez: " + nomeJogadorDado;
@@ -723,19 +849,11 @@ namespace Projeto_Integrador3
             }
         }
 
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
+        private void groupBox2_Enter(object sender, EventArgs e) { }
 
-        }
+        private void panel1_Paint_1(object sender, PaintEventArgs e) { }
 
-        private void panel1_Paint_1(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void textBoxTabuleiro_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+        private void textBoxTabuleiro_TextChanged(object sender, EventArgs e) { }
     }
 }
+
