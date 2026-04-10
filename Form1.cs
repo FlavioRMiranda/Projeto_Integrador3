@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Projeto_Integrador3
 {
@@ -72,10 +73,12 @@ namespace Projeto_Integrador3
 
 
 
+
         // ==========================
         // CRIAR PARTIDA
         // ==========================
 
+   
         private void buttonCriarPartida_Click(object sender, EventArgs e)
         {
             try
@@ -122,6 +125,95 @@ namespace Projeto_Integrador3
             catch (Exception ex)
             {
                 MessageBox.Show("Ocorreu um erro: " + ex.Message);
+            }
+        }
+
+        private void LimparTabuleiroVisual()
+        {
+            panelFI.Controls.Clear();
+            panelRS.Controls.Clear();
+            panelMT.Controls.Clear();
+            panelIS.Controls.Clear();
+            panelPA.Controls.Clear();
+            panelCD.Controls.Clear();
+        }
+        private void DesenharTabuleiro(string tabuleiro)
+        {
+
+            MessageBox.Show("DesenharTabuleiro foi chamado.\n\nTabuleiro recebido:\n" + tabuleiro);
+            LimparTabuleiroVisual();
+
+            string[] linhas = tabuleiro.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string linha in linhas)
+            {
+                string[] partes = linha.Split(',');
+
+                if (partes.Length < 3)
+                    continue;
+
+                string cercado = partes[0].Trim();
+                string dino = partes[1].Trim().ToLower();
+                int quantidade = int.Parse(partes[2].Trim());
+
+                Panel destino = null;
+
+                switch (cercado)
+                {
+                    case "FI":
+                        destino = panelFI;
+                        break;
+
+                    case "RS":
+                        destino = panelRS;
+                        break;
+
+                    case "MT":
+                        destino = panelMT;
+                        break;
+
+                    case "IS":
+                        destino = panelIS;
+                        break;
+
+                    case "PA":
+                        destino = panelPA;
+                        break;
+
+                    case "CD":
+                        destino = panelCD;
+                        break;
+                }
+
+                if (destino == null)
+                    continue;
+
+                for (int i = 0; i < quantidade; i++)
+                {
+                    PictureBox pb = new PictureBox();
+                    string caminho = Path.Combine(Application.StartupPath, "assets", char.ToUpper(dino[0]) + dino.Substring(1) + ".jpg");
+ 
+                    MessageBox.Show("Tentando carregar: " + caminho);
+
+                    if (System.IO.File.Exists(caminho))
+                    {
+                        pb.Image = Image.FromFile(caminho);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Imagem não encontrada: " + caminho);
+                    }
+
+
+
+                    pb.SizeMode = PictureBoxSizeMode.StretchImage;
+                    pb.Width = 40;
+                    pb.Height = 40;
+                    pb.Left = i * 45;
+                    pb.Top = 10;
+
+                    destino.Controls.Add(pb);
+                }
             }
         }
 
@@ -215,10 +307,16 @@ namespace Projeto_Integrador3
             string codDino = textBoxDino.Text.Trim().ToUpper();
             string codCercado = textBoxCercado.Text.Trim().ToUpper();
 
-            // 🔍 Validação
+                      // 🔍 Validação
             if (codDino.Length != 2 || codCercado.Length != 2)
             {
                 MessageBox.Show("Os códigos devem ter exatamente 2 caracteres.");
+                return;
+            }
+
+            if (!EhMinhaVez())
+            {
+                MessageBox.Show("Ainda não é a sua vez de jogar.");
                 return;
             }
 
@@ -258,6 +356,8 @@ namespace Projeto_Integrador3
                 }
             }
 
+         
+
             string resposta = Draft.Jogo.Jogar(idJogador, senhaJogador, codDino, codCercado);
 
             // 🔄 Tratamento da resposta
@@ -271,6 +371,7 @@ namespace Projeto_Integrador3
                 // Limpa a caixa e joga o texto original do servidor pulando as linhas corretamente
                 textBoxTabuleiro.Clear();
                 textBoxTabuleiro.Text = meuTabuleiro.Replace("\n", Environment.NewLine);
+                DesenharTabuleiro(meuTabuleiro);
             }
             else
             {
@@ -723,6 +824,26 @@ namespace Projeto_Integrador3
             }
         }
 
+
+        private bool EhMinhaVez()
+        {
+            if (listBoxPartidas.SelectedItem == null)
+                return false;
+
+            string linhaPartida = listBoxPartidas.SelectedItem.ToString();
+            int idPartida = int.Parse(linhaPartida.Split('-')[0].Trim());
+
+            string statusPartida = Draft.Jogo.VerificarPartida(idPartida);
+            string[] dadosPartida = statusPartida.Split(',');
+
+            if (dadosPartida.Length < 5)
+                return false;
+
+            string idJogadorDaVez = dadosPartida[3].Trim();
+
+            return this.idJogador.ToString() == idJogadorDaVez;
+        }
+
         private void groupBox2_Enter(object sender, EventArgs e)
         {
 
@@ -734,6 +855,31 @@ namespace Projeto_Integrador3
         }
 
         private void textBoxTabuleiro_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelIS_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelFI_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelCD_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelTabuleiro_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelTabuleiro_Click(object sender, EventArgs e)
         {
 
         }
