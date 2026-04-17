@@ -48,6 +48,9 @@ namespace Projeto_Integrador3
 
         private void CriarPaineisCercados()
         {
+            // Essas coordenadas são baseados na resolução do meu Laptop.
+            // --> fazer variaveis que pegam a resolução e calculam as coordenadas corretas
+            // -- Lucas <3
             painelPorCercado["FI"] = CriarPainel(90, 55, 420, 200); // superior esquerdo
             painelPorCercado["RS"] = CriarPainel(885, 70, 175, 125); // superior direito
             painelPorCercado["MT"] = CriarPainel(60, 350, 375, 215); // esquerdo do meio
