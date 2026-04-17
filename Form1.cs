@@ -13,6 +13,8 @@ namespace Projeto_Integrador3
         private string senhaJogadorCriador;
         private int idJogadorCriador;
         private int idJogadorAtual;
+        private int idPartidaAtual = 0;
+        private int idJogadorDoDadoAtual = 0;
         private string senhaJogadorAtual;
         private string GRUPO = "Fossilizados";
         private string jogadorDaVez;
@@ -20,40 +22,199 @@ namespace Projeto_Integrador3
         private string regraAtual;
         private int idJogador;
         private string senhaJogador;
+        private bool modoDemo = false;
+
+        private Dictionary<string, Dictionary<string, int>> tabuleiroDemo =
+            new Dictionary<string, Dictionary<string, int>>();
 
         public Form1()
         {
             InitializeComponent();
             labelGrupo.Text = GRUPO;
-            CriarPaineisJogadores();
+            CriarPaineisCercados();
+            InicializarTabuleiroDemo();
         }
 
-        private void CriarPaineisJogadores()
+        private void InicializarTabuleiroDemo()
         {
-            flowJogador1 = CriarPainel(60, 60);
-            flowJogador2 = CriarPainel(60, 140);
-            flowJogador3 = CriarPainel(60, 220);
-            flowJogador4 = CriarPainel(60, 300);
-            flowJogador5 = CriarPainel(60, 380);
-            flowJogador6 = CriarPainel(60, 460);
-            pictureBoxTabuleiro.Controls.Add(flowJogador1);
-            pictureBoxTabuleiro.Controls.Add(flowJogador2);
-            pictureBoxTabuleiro.Controls.Add(flowJogador3);
-            pictureBoxTabuleiro.Controls.Add(flowJogador4);
-            pictureBoxTabuleiro.Controls.Add(flowJogador5);
-            pictureBoxTabuleiro.Controls.Add(flowJogador6);
+            tabuleiroDemo["FI"] = new Dictionary<string, int>();
+            tabuleiroDemo["RS"] = new Dictionary<string, int>();
+            tabuleiroDemo["MT"] = new Dictionary<string, int>();
+            tabuleiroDemo["IS"] = new Dictionary<string, int>();
+            tabuleiroDemo["PA"] = new Dictionary<string, int>();
+            tabuleiroDemo["CD"] = new Dictionary<string, int>();
+            tabuleiroDemo["RI"] = new Dictionary<string, int>();
         }
 
-        private FlowLayoutPanel CriarPainel(int x, int y)
+        private void CriarPaineisCercados()
+        {
+            painelPorCercado["FI"] = CriarPainel(90, 55, 420, 200); // superior esquerdo
+            painelPorCercado["RS"] = CriarPainel(885, 70, 175, 125); // superior direito
+            painelPorCercado["MT"] = CriarPainel(60, 350, 375, 215); // esquerdo do meio
+            painelPorCercado["IS"] = CriarPainel(795, 360, 440, 220); // Centro-direita
+            painelPorCercado["PA"] = CriarPainel(150, 625, 325, 260); // inferior esquerdo
+            painelPorCercado["CD"] = CriarPainel(990, 620, 300, 180); // inferior direito
+
+            foreach (var painel in painelPorCercado.Values)
+            {
+                pictureBoxTabuleiro.Controls.Add(painel);
+            }
+        }
+
+        private FlowLayoutPanel CriarPainel(int x, int y, int largura, int altura)
         {
             FlowLayoutPanel painel = new FlowLayoutPanel();
             painel.Location = new Point(x, y);
-            painel.Size = new Size(220, 55);
-            painel.BackColor = Color.FromArgb(180, Color.White);
-            painel.WrapContents = false;
-            painel.AutoScroll = true;
+            painel.Size = new Size(largura, altura);
+            painel.BackColor = Color.FromArgb(80, Color.White);
+            painel.WrapContents = true;
+            painel.AutoScroll = false;
             painel.BringToFront();
             return painel;
+        }
+
+        private void AdicionarDinoDemo(string codDino, string codCercado)
+        {
+            codDino = codDino.Trim().ToUpper();
+            codCercado = codCercado.Trim().ToUpper();
+
+            if (!imagensDinos.ContainsKey(codDino))
+            {
+                MessageBox.Show("Código de dino inválido: " + codDino);
+                return;
+            }
+
+            if (!painelPorCercado.ContainsKey(codCercado))
+            {
+                MessageBox.Show("Código de cercado inválido: " + codCercado);
+                return;
+            }
+
+            if (!tabuleiroDemo.ContainsKey(codCercado))
+            {
+                tabuleiroDemo[codCercado] = new Dictionary<string, int>();
+            }
+
+            if (!tabuleiroDemo[codCercado].ContainsKey(codDino))
+            {
+                tabuleiroDemo[codCercado][codDino] = 0;
+            }
+
+            tabuleiroDemo[codCercado][codDino]++;
+            RenderizarTabuleiroDemo();
+            AtualizarTextoTabuleiroDemo();
+        }
+
+        private void RenderizarTabuleiroDemo()
+        {
+            foreach (var painel in painelPorCercado.Values)
+            {
+                painel.Controls.Clear();
+            }
+
+            foreach (var entradaCercado in tabuleiroDemo)
+            {
+                string cercado = entradaCercado.Key;
+
+                if (!painelPorCercado.ContainsKey(cercado))
+                    continue;
+
+                foreach (var entradaDino in entradaCercado.Value)
+                {
+                    string codigoDino = entradaDino.Key;
+                    int quantidade = entradaDino.Value;
+
+                    if (!imagensDinos.ContainsKey(codigoDino))
+                        continue;
+
+                    string caminho = CaminhoImagemDino(imagensDinos[codigoDino]);
+
+                    if (!File.Exists(caminho))
+                        continue;
+
+                    for (int i = 0; i < quantidade; i++)
+                    {
+                        PictureBox pb = new PictureBox();
+                        pb.Width = 40;
+                        pb.Height = 40;
+                        pb.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pb.Image = new Bitmap(caminho);
+
+                        painelPorCercado[cercado].Controls.Add(pb);
+                    }
+                }
+            }
+        }
+
+        private void AtualizarTextoTabuleiroDemo()
+        {
+            textBoxTabuleiro.Clear();
+
+            foreach (var entradaCercado in tabuleiroDemo)
+            {
+                string cercado = entradaCercado.Key;
+
+                foreach (var entradaDino in entradaCercado.Value)
+                {
+                    string codigoDino = entradaDino.Key;
+                    int quantidade = entradaDino.Value;
+
+                    textBoxTabuleiro.AppendText(
+                        cercado + "," + codigoDino + "," + quantidade + Environment.NewLine
+                    );
+                }
+            }
+        }
+
+        private void RenderizarTabuleiroVisual()
+        {
+            foreach (var painel in painelPorCercado.Values)
+            {
+                painel.Controls.Clear();
+            }
+
+            string estadoTabuleiro = Draft.Jogo.ExibirTabuleiro(idJogador, senhaJogador);
+
+            string[] linhas = estadoTabuleiro.Split(
+                new[] { '\r', '\n' },
+                StringSplitOptions.RemoveEmptyEntries
+            );
+
+            foreach (string linha in linhas)
+            {
+                string[] partes = linha.Split(',');
+
+                if (partes.Length < 3)
+                    continue;
+
+                string cercado = partes[0].Trim().ToUpper();
+                string codigoDino = partes[1].Trim().ToUpper();
+
+                if (!int.TryParse(partes[2].Trim(), out int quantidade))
+                    continue;
+
+                if (!painelPorCercado.ContainsKey(cercado))
+                    continue;
+
+                if (!imagensDinos.ContainsKey(codigoDino))
+                    continue;
+
+                string caminho = CaminhoImagemDino(imagensDinos[codigoDino]);
+
+                if (!File.Exists(caminho))
+                    continue;
+
+                for (int i = 0; i < quantidade; i++)
+                {
+                    PictureBox pb = new PictureBox();
+                    pb.Width = 40;
+                    pb.Height = 40;
+                    pb.SizeMode = PictureBoxSizeMode.StretchImage;
+                    pb.Image = new Bitmap(caminho);
+
+                    painelPorCercado[cercado].Controls.Add(pb);
+                }
+            }
         }
 
         // ==========================
@@ -131,17 +292,19 @@ namespace Projeto_Integrador3
 
         private Dictionary<string, string> imagensDinos = new Dictionary<string, string>()
         {
-            { "BR", "DinoRosa.jpg" }, // Braquiossauro (roxo -> usa rosa)
-            { "EP", "DinoLaranja.jpg" }, // Espinossauro
-            { "ET", "DinoAzul.jpg" }, // Estegossauro
-            { "PA", "DinoVerde.jpg" }, // Parasaurolófo
-            { "TI", "DinoVermelho.jpg" }, // Tiranossauro
-            { "TR", "DinoAmarelo.jpg" }, // Tricerátops
+            { "BR", "DinoRosa.jpg" },
+            { "EP", "DinoLaranja.jpg" },
+            { "ET", "DinoAzul.jpg" },
+            { "PA", "DinoVerde.jpg" },
+            { "TI", "DinoVermelho.jpg" },
+            { "TR", "DinoAmarelo.jpg" },
         };
 
         private Dictionary<int, FlowLayoutPanel> painelPorJogador =
             new Dictionary<int, FlowLayoutPanel>();
         private Dictionary<int, string> senhaPorJogador = new Dictionary<int, string>();
+        private Dictionary<string, FlowLayoutPanel> painelPorCercado =
+            new Dictionary<string, FlowLayoutPanel>();
 
         // ==========================
         // CRIAR PARTIDA
@@ -282,6 +445,12 @@ namespace Projeto_Integrador3
             string codDino = textBoxDino.Text.Trim().ToUpper();
             string codCercado = textBoxCercado.Text.Trim().ToUpper();
 
+            if (modoDemo)
+            {
+                AdicionarDinoDemo(codDino, codCercado);
+                MessageBox.Show("Dino adicionado em modo demonstração.");
+                return;
+            }
             // 🔍 Validação
             if (codDino.Length != 2 || codCercado.Length != 2)
             {
@@ -345,12 +514,15 @@ namespace Projeto_Integrador3
             {
                 MessageBox.Show("Jogada realizada! Próximo turno: " + proximoTurno);
 
+                labelTurno.Text = "Turno: " + proximoTurno;
                 // 👉 Atualiza o tabuleiro na tela logo após a jogada dar certo
                 string meuTabuleiro = Draft.Jogo.ExibirTabuleiro(idJogador, senhaJogador);
 
                 // Limpa a caixa e joga o texto original do servidor pulando as linhas corretamente
                 textBoxTabuleiro.Clear();
                 textBoxTabuleiro.Text = meuTabuleiro.Replace("\n", Environment.NewLine);
+                RenderizarTabuleiroVisual();
+                timer1_Tick(null, null);
             }
             else
             {
@@ -379,6 +551,7 @@ namespace Projeto_Integrador3
                     MessageBox.Show("ID da partida inválido.");
                     return;
                 }
+                idPartidaAtual = idPartida;
 
                 string nomeJogador = this.nomeJogador.Text.Trim();
                 string senhaPartida = this.senhaPartida.Text;
@@ -404,6 +577,7 @@ namespace Projeto_Integrador3
                 idJogador = int.Parse(dados[0].Trim());
                 senhaJogador = dados[1].Trim();
 
+                idPartidaAtual = idPartida;
                 senhaPorJogador[idJogador] = senhaJogador;
                 ExibirJogadores(idPartida);
                 RegistrarJogadoresNosPaineis();
@@ -474,12 +648,12 @@ namespace Projeto_Integrador3
 
             FlowLayoutPanel[] paineis =
             {
-                flowJogador1,
-                flowJogador2,
-                flowJogador3,
-                flowJogador4,
-                flowJogador5,
-                flowJogador6,
+                painelPorCercado["FI"],
+                painelPorCercado["RS"],
+                painelPorCercado["MT"],
+                painelPorCercado["IS"],
+                painelPorCercado["PA"],
+                painelPorCercado["CD"],
             };
             int indice = 0;
             foreach (var item in listBoxJogadores.Items)
@@ -680,6 +854,10 @@ namespace Projeto_Integrador3
                 // Inicia a partida
                 string resultado = Draft.Jogo.Iniciar(idJogador, senha);
                 MessageBox.Show(resultado, "Resultado da Partida");
+                string meuTabuleiro = Draft.Jogo.ExibirTabuleiro(idJogador, senha);
+                textBoxTabuleiro.Clear();
+                textBoxTabuleiro.Text = meuTabuleiro.Replace("\n", Environment.NewLine);
+                RenderizarTabuleiroVisual();
 
                 string[] dados = resultado.Split(',');
 
@@ -702,7 +880,7 @@ namespace Projeto_Integrador3
                 {
                     textBoxDinossauros.AppendText(linhaMao + Environment.NewLine);
                 }
-                AtualizarMaosDeTodos();
+                //AtualizarMaosDeTodos();
             }
             catch (Exception ex)
             {
@@ -720,12 +898,18 @@ namespace Projeto_Integrador3
                 return;
 
             string linha = listBoxJogadores.SelectedItem.ToString();
-
             string[] dados = linha.Split(',');
 
-            string idJogador = dados[0];
+            int idSelecionado = int.Parse(dados[0].Trim());
 
-            labelIdJogador.Text = "ID Jogador: " + idJogador;
+            labelIdJogador.Text = "ID Jogador: " + idSelecionado;
+
+            if (senhaPorJogador.ContainsKey(idSelecionado))
+            {
+                idJogador = idSelecionado;
+                senhaJogador = senhaPorJogador[idSelecionado];
+                labelSenhaJogador.Text = "Senha Jogador: " + senhaJogador;
+            }
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e) { }
@@ -796,57 +980,53 @@ namespace Projeto_Integrador3
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            // 1. Uma trava de segurança: O timer só funciona se você tiver selecionado uma partida
-            if (listBoxPartidas.SelectedItem != null)
+            if (idPartidaAtual <= 0)
+                return;
+
+            try
             {
-                try
+                string statusPartida = Draft.Jogo.VerificarPartida(idPartidaAtual);
+                string[] dadosPartida = statusPartida.Split(',');
+
+                if (dadosPartida.Length >= 5)
                 {
-                    // Pega o ID da partida que está selecionada na lista
-                    int idPartidaSelecionada = int.Parse(
-                        listBoxPartidas.SelectedItem.ToString().Split('-')[0].Trim()
-                    );
+                    string statusDaPartida = dadosPartida[0].Trim();
+                    string turnoAtual = dadosPartida[1].Trim();
+                    string statusDoTurno = dadosPartida[2].Trim();
+                    string idJogadorDado = dadosPartida[3].Trim();
+                    string faceDado = dadosPartida[4].Trim();
 
-                    // Pergunta pro servidor: "Como está a partida agora?"
-                    string statusPartida = Draft.Jogo.VerificarPartida(idPartidaSelecionada);
-                    string[] dadosPartida = statusPartida.Split(',');
+                    regraAtual = faceDado;
+                    labelTurno.Text = "Turno: " + turnoAtual;
 
-                    // Só tenta atualizar se o servidor devolver a resposta completa (evita crash)
-                    if (dadosPartida.Length >= 5)
+                    if (int.TryParse(idJogadorDado, out int idDado))
                     {
-                        // Atualiza o Turno (Posição 1)
-                        string turnoAtual = dadosPartida[1];
-                        labelTurno.Text = "Turno: " + turnoAtual;
+                        idJogadorDoDadoAtual = idDado;
 
-                        // Atualiza o Dono do Dado (Posição 3) e Traduz o Dado (Posição 4)
-                        string idJogadorDado = dadosPartida[3];
-                        string faceDado = dadosPartida[4].Trim();
-                        regraAtual = faceDado; // Já vamos salvar na memória limpinho, porque vamos usar essa regra nos IFs agora!
-
-                        string nomeJogadorDado = obternomeJogadorporid(
-                            idJogadorDado,
-                            listBoxJogadores
-                        );
-
-                        // O TRUQUE MÁGICO AQUI:
-                        // Se o código não conhecer o jogador, ele aperta o botão "Mostrar Jogadores" sozinho por trás dos panos e procura de novo!
-                        if (nomeJogadorDado == "desconhecido")
+                        // troca automaticamente o "jogador logado" para quem está com o dado
+                        if (senhaPorJogador.ContainsKey(idDado))
                         {
-                            ExibirJogadores(idPartidaSelecionada); // Atualiza a lista
-                            nomeJogadorDado = obternomeJogadorporid(
-                                idJogadorDado,
-                                listBoxJogadores
-                            ); // Tenta achar o nome de novo
-                        }
+                            idJogador = idDado;
+                            senhaJogador = senhaPorJogador[idDado];
 
-                        labelJogadorDaVez.Text = "Jogador da vez: " + nomeJogadorDado;
-                        labelDado.Text = "Dado: " + TraduzirDado(faceDado);
+                            labelIdJogador.Text = "ID Jogador: " + idJogador;
+                            labelSenhaJogador.Text = "Senha Jogador: " + senhaJogador;
+                        }
                     }
-                }
-                catch
-                {
-                    // Deixamos vazio de propósito. Se a internet piscar, o jogo não trava, ele só tenta de novo 2 segundos depois!
+
+                    string nomeJogadorDado = obternomeJogadorporid(idJogadorDado, listBoxJogadores);
+
+                    if (nomeJogadorDado == "desconhecido")
+                    {
+                        ExibirJogadores(idPartidaAtual);
+                        nomeJogadorDado = obternomeJogadorporid(idJogadorDado, listBoxJogadores);
+                    }
+
+                    labelJogadorDaVez.Text = "Jogador com o dado: " + nomeJogadorDado;
+                    labelDado.Text = "Dado: " + TraduzirDado(faceDado);
                 }
             }
+            catch { }
         }
 
         private void groupBox2_Enter(object sender, EventArgs e) { }
@@ -856,4 +1036,3 @@ namespace Projeto_Integrador3
         private void textBoxTabuleiro_TextChanged(object sender, EventArgs e) { }
     }
 }
-

@@ -21,13 +21,6 @@ namespace Projeto_Integrador3
         private System.Windows.Forms.Button buttonVersao;
         private System.Windows.Forms.Button buttonListarPartidas;
 
-        private FlowLayoutPanel flowJogador1;
-        private FlowLayoutPanel flowJogador2;
-        private FlowLayoutPanel flowJogador3;
-        private FlowLayoutPanel flowJogador4;
-        private FlowLayoutPanel flowJogador5;
-        private FlowLayoutPanel flowJogador6;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -1099,4 +1092,3 @@ namespace Projeto_Integrador3
         private TextBox textBoxTabuleiro;
     }
 }
-
