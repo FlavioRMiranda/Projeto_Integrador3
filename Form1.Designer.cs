@@ -33,6 +33,9 @@ namespace Projeto_Integrador3
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.buttonPausarTimer = new System.Windows.Forms.Button();
+            this.buttonAcompanhar = new System.Windows.Forms.Button();
+            this.buttonExportarHistorico = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
@@ -92,13 +95,16 @@ namespace Projeto_Integrador3
             this.buttonVersao = new System.Windows.Forms.Button();
             this.labelGrupo = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.panelTabuleiro = new System.Windows.Forms.PictureBox();
-            this.panelFI = new System.Windows.Forms.Panel();
-            this.panelRS = new System.Windows.Forms.Panel();
             this.panelMT = new System.Windows.Forms.Panel();
-            this.panelIS = new System.Windows.Forms.Panel();
             this.panelPA = new System.Windows.Forms.Panel();
             this.panelCD = new System.Windows.Forms.Panel();
+            this.panelRS = new System.Windows.Forms.Panel();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.panelFI = new System.Windows.Forms.Panel();
+            this.panelIS = new System.Windows.Forms.Panel();
+            this.panelTabuleiro = new System.Windows.Forms.Panel();
+            this.panelRIO = new System.Windows.Forms.Panel();
+            this.pictureBoxTabuleiro = new System.Windows.Forms.PictureBox();
             this.panelMenu.SuspendLayout();
             this.panel8.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -117,12 +123,17 @@ namespace Projeto_Integrador3
             this.groupBox3.SuspendLayout();
             this.panelContainer.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelTabuleiro)).BeginInit();
+            this.panelTabuleiro.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTabuleiro)).BeginInit();
             this.SuspendLayout();
             // 
             // panelMenu
             // 
+            this.panelMenu.AutoSize = true;
             this.panelMenu.BackColor = System.Drawing.Color.SkyBlue;
+            this.panelMenu.Controls.Add(this.buttonPausarTimer);
+            this.panelMenu.Controls.Add(this.buttonAcompanhar);
+            this.panelMenu.Controls.Add(this.buttonExportarHistorico);
             this.panelMenu.Controls.Add(this.panel8);
             this.panelMenu.Controls.Add(this.groupBox8);
             this.panelMenu.Controls.Add(this.panel1);
@@ -145,10 +156,40 @@ namespace Projeto_Integrador3
             this.panelMenu.Controls.Add(this.buttonVersao);
             this.panelMenu.Controls.Add(this.labelGrupo);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelMenu.Location = new System.Drawing.Point(1025, 0);
+            this.panelMenu.Location = new System.Drawing.Point(951, 0);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(686, 861);
+            this.panelMenu.Size = new System.Drawing.Size(542, 753);
             this.panelMenu.TabIndex = 1;
+            // 
+            // buttonPausarTimer
+            // 
+            this.buttonPausarTimer.Location = new System.Drawing.Point(326, 689);
+            this.buttonPausarTimer.Name = "buttonPausarTimer";
+            this.buttonPausarTimer.Size = new System.Drawing.Size(75, 23);
+            this.buttonPausarTimer.TabIndex = 42;
+            this.buttonPausarTimer.Text = "StopStart";
+            this.buttonPausarTimer.UseVisualStyleBackColor = true;
+            this.buttonPausarTimer.Click += new System.EventHandler(this.buttonPausarTimer_Click);
+            // 
+            // buttonAcompanhar
+            // 
+            this.buttonAcompanhar.Location = new System.Drawing.Point(30, 689);
+            this.buttonAcompanhar.Name = "buttonAcompanhar";
+            this.buttonAcompanhar.Size = new System.Drawing.Size(112, 23);
+            this.buttonAcompanhar.TabIndex = 41;
+            this.buttonAcompanhar.Text = "Acompanhar Partida";
+            this.buttonAcompanhar.UseVisualStyleBackColor = true;
+            this.buttonAcompanhar.Click += new System.EventHandler(this.buttonAcompanhar_Click);
+            // 
+            // buttonExportarHistorico
+            // 
+            this.buttonExportarHistorico.Location = new System.Drawing.Point(196, 689);
+            this.buttonExportarHistorico.Name = "buttonExportarHistorico";
+            this.buttonExportarHistorico.Size = new System.Drawing.Size(75, 23);
+            this.buttonExportarHistorico.TabIndex = 40;
+            this.buttonExportarHistorico.Text = "Exportar";
+            this.buttonExportarHistorico.UseVisualStyleBackColor = true;
+            this.buttonExportarHistorico.Click += new System.EventHandler(this.buttonExportarHistorico_Click);
             // 
             // panel8
             // 
@@ -191,7 +232,6 @@ namespace Projeto_Integrador3
             this.textBoxTabuleiro.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxTabuleiro.Size = new System.Drawing.Size(263, 85);
             this.textBoxTabuleiro.TabIndex = 19;
-            this.textBoxTabuleiro.TextChanged += new System.EventHandler(this.textBoxTabuleiro_TextChanged);
             // 
             // panel1
             // 
@@ -202,7 +242,6 @@ namespace Projeto_Integrador3
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(260, 34);
             this.panel1.TabIndex = 36;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint_1);
             // 
             // label11
             // 
@@ -212,7 +251,7 @@ namespace Projeto_Integrador3
             this.label11.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label11.Location = new System.Drawing.Point(8, 5);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(79, 19);
+            this.label11.Size = new System.Drawing.Size(92, 23);
             this.label11.TabIndex = 0;
             this.label11.Text = "Jogadores";
             // 
@@ -227,7 +266,6 @@ namespace Projeto_Integrador3
             this.groupBox2.TabIndex = 35;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "groupBox2";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // labelTurno
             // 
@@ -235,7 +273,7 @@ namespace Projeto_Integrador3
             this.labelTurno.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTurno.Location = new System.Drawing.Point(9, 79);
             this.labelTurno.Name = "labelTurno";
-            this.labelTurno.Size = new System.Drawing.Size(35, 13);
+            this.labelTurno.Size = new System.Drawing.Size(43, 17);
             this.labelTurno.TabIndex = 24;
             this.labelTurno.Text = "Turno";
             // 
@@ -245,7 +283,7 @@ namespace Projeto_Integrador3
             this.labelJogadorDaVez.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelJogadorDaVez.Location = new System.Drawing.Point(6, 37);
             this.labelJogadorDaVez.Name = "labelJogadorDaVez";
-            this.labelJogadorDaVez.Size = new System.Drawing.Size(86, 13);
+            this.labelJogadorDaVez.Size = new System.Drawing.Size(101, 17);
             this.labelJogadorDaVez.TabIndex = 22;
             this.labelJogadorDaVez.Text = "Jogador Da Vez";
             // 
@@ -255,7 +293,7 @@ namespace Projeto_Integrador3
             this.labelDado.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDado.Location = new System.Drawing.Point(6, 58);
             this.labelDado.Name = "labelDado";
-            this.labelDado.Size = new System.Drawing.Size(78, 13);
+            this.labelDado.Size = new System.Drawing.Size(91, 17);
             this.labelDado.TabIndex = 23;
             this.labelDado.Text = "Face do Dado";
             // 
@@ -276,11 +314,10 @@ namespace Projeto_Integrador3
             this.button1.ForeColor = System.Drawing.Color.Black;
             this.button1.Location = new System.Drawing.Point(9, 6);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(142, 23);
+            this.button1.Size = new System.Drawing.Size(159, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "Dinossauros em mão";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // groupBox7
             // 
@@ -297,11 +334,9 @@ namespace Projeto_Integrador3
             this.textBoxDinossauros.Location = new System.Drawing.Point(0, 35);
             this.textBoxDinossauros.Multiline = true;
             this.textBoxDinossauros.Name = "textBoxDinossauros";
-            this.textBoxDinossauros.ReadOnly = true;
             this.textBoxDinossauros.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxDinossauros.Size = new System.Drawing.Size(171, 111);
+            this.textBoxDinossauros.Size = new System.Drawing.Size(171, 84);
             this.textBoxDinossauros.TabIndex = 19;
-            this.textBoxDinossauros.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // groupBox6
             // 
@@ -333,18 +368,18 @@ namespace Projeto_Integrador3
             this.buttonMostrarJogadores.Name = "buttonMostrarJogadores";
             this.buttonMostrarJogadores.Size = new System.Drawing.Size(132, 23);
             this.buttonMostrarJogadores.TabIndex = 3;
-            this.buttonMostrarJogadores.Text = "Mostrar jogadores";
+            this.buttonMostrarJogadores.Text = "jogadores";
             this.buttonMostrarJogadores.UseVisualStyleBackColor = false;
             this.buttonMostrarJogadores.Click += new System.EventHandler(this.buttonMostrarJogadores_Click);
             // 
             // listBoxJogadores
             // 
             this.listBoxJogadores.FormattingEnabled = true;
+            this.listBoxJogadores.ItemHeight = 16;
             this.listBoxJogadores.Location = new System.Drawing.Point(0, 33);
             this.listBoxJogadores.Name = "listBoxJogadores";
-            this.listBoxJogadores.Size = new System.Drawing.Size(168, 95);
+            this.listBoxJogadores.Size = new System.Drawing.Size(168, 84);
             this.listBoxJogadores.TabIndex = 12;
-            this.listBoxJogadores.SelectedIndexChanged += new System.EventHandler(this.listBoxJogadores_SelectedIndexChanged);
             // 
             // panel5
             // 
@@ -365,7 +400,7 @@ namespace Projeto_Integrador3
             this.buttonListarPartidas.Name = "buttonListarPartidas";
             this.buttonListarPartidas.Size = new System.Drawing.Size(103, 23);
             this.buttonListarPartidas.TabIndex = 0;
-            this.buttonListarPartidas.Text = "Listar Partidas";
+            this.buttonListarPartidas.Text = " Partidas";
             this.buttonListarPartidas.UseVisualStyleBackColor = false;
             this.buttonListarPartidas.Click += new System.EventHandler(this.buttonListarPartidas_Click);
             // 
@@ -381,9 +416,10 @@ namespace Projeto_Integrador3
             // 
             // listBoxPartidas
             // 
+            this.listBoxPartidas.ItemHeight = 16;
             this.listBoxPartidas.Location = new System.Drawing.Point(0, 35);
             this.listBoxPartidas.Name = "listBoxPartidas";
-            this.listBoxPartidas.Size = new System.Drawing.Size(168, 95);
+            this.listBoxPartidas.Size = new System.Drawing.Size(168, 84);
             this.listBoxPartidas.TabIndex = 11;
             // 
             // panel4
@@ -404,10 +440,9 @@ namespace Projeto_Integrador3
             this.label12.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label12.Location = new System.Drawing.Point(3, 2);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(103, 19);
+            this.label12.Size = new System.Drawing.Size(122, 23);
             this.label12.TabIndex = 0;
             this.label12.Text = "Iniciar Partida";
-            this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
             // groupBox4
             // 
@@ -424,6 +459,7 @@ namespace Projeto_Integrador3
             this.groupBox4.TabIndex = 32;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "groupBox4";
+            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // panel3
             // 
@@ -443,7 +479,7 @@ namespace Projeto_Integrador3
             this.label9.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label9.Location = new System.Drawing.Point(3, 2);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(95, 19);
+            this.label9.Size = new System.Drawing.Size(112, 23);
             this.label9.TabIndex = 0;
             this.label9.Text = "Criar Partida";
             // 
@@ -480,13 +516,12 @@ namespace Projeto_Integrador3
             this.labelNome.Size = new System.Drawing.Size(122, 23);
             this.labelNome.TabIndex = 3;
             this.labelNome.Text = "Nome da Partida";
-            this.labelNome.Click += new System.EventHandler(this.labelNome_Click);
             // 
             // textBoxNomePartida
             // 
             this.textBoxNomePartida.Location = new System.Drawing.Point(133, 44);
             this.textBoxNomePartida.Name = "textBoxNomePartida";
-            this.textBoxNomePartida.Size = new System.Drawing.Size(103, 20);
+            this.textBoxNomePartida.Size = new System.Drawing.Size(103, 22);
             this.textBoxNomePartida.TabIndex = 4;
             // 
             // labelSenha
@@ -498,16 +533,14 @@ namespace Projeto_Integrador3
             this.labelSenha.Size = new System.Drawing.Size(100, 23);
             this.labelSenha.TabIndex = 5;
             this.labelSenha.Text = "Senha";
-            this.labelSenha.Click += new System.EventHandler(this.labelSenha_Click);
             // 
             // textBoxSenhaPartida
             // 
             this.textBoxSenhaPartida.Location = new System.Drawing.Point(133, 72);
             this.textBoxSenhaPartida.Name = "textBoxSenhaPartida";
             this.textBoxSenhaPartida.PasswordChar = '*';
-            this.textBoxSenhaPartida.Size = new System.Drawing.Size(101, 20);
+            this.textBoxSenhaPartida.Size = new System.Drawing.Size(101, 22);
             this.textBoxSenhaPartida.TabIndex = 6;
-            this.textBoxSenhaPartida.TextChanged += new System.EventHandler(this.textBoxSenhaPartida_TextChanged_1);
             // 
             // panel2
             // 
@@ -516,7 +549,7 @@ namespace Projeto_Integrador3
             this.panel2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panel2.Location = new System.Drawing.Point(277, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(261, 34);
+            this.panel2.Size = new System.Drawing.Size(261, 31);
             this.panel2.TabIndex = 31;
             // 
             // label10
@@ -527,7 +560,7 @@ namespace Projeto_Integrador3
             this.label10.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label10.Location = new System.Drawing.Point(5, 5);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(111, 19);
+            this.label10.Size = new System.Drawing.Size(131, 23);
             this.label10.TabIndex = 0;
             this.label10.Text = "Inserir Jogador";
             // 
@@ -553,16 +586,15 @@ namespace Projeto_Integrador3
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 13);
+            this.label1.Size = new System.Drawing.Size(90, 17);
             this.label1.TabIndex = 5;
             this.label1.Text = "ID da Partida:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // textBoxIdPartida
             // 
             this.textBoxIdPartida.Location = new System.Drawing.Point(150, 23);
             this.textBoxIdPartida.Name = "textBoxIdPartida";
-            this.textBoxIdPartida.Size = new System.Drawing.Size(98, 20);
+            this.textBoxIdPartida.Size = new System.Drawing.Size(98, 22);
             this.textBoxIdPartida.TabIndex = 2;
             // 
             // label2
@@ -571,18 +603,16 @@ namespace Projeto_Integrador3
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(12, 49);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(99, 13);
+            this.label2.Size = new System.Drawing.Size(116, 17);
             this.label2.TabIndex = 6;
             this.label2.Text = "Nome do jogador";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // nomeJogador
             // 
             this.nomeJogador.Location = new System.Drawing.Point(150, 47);
             this.nomeJogador.Name = "nomeJogador";
-            this.nomeJogador.Size = new System.Drawing.Size(98, 20);
+            this.nomeJogador.Size = new System.Drawing.Size(98, 22);
             this.nomeJogador.TabIndex = 3;
-            this.nomeJogador.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label3
             // 
@@ -590,20 +620,18 @@ namespace Projeto_Integrador3
             this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(12, 73);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(93, 13);
+            this.label3.Size = new System.Drawing.Size(111, 17);
             this.label3.TabIndex = 7;
             this.label3.Text = "Senha da partida";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // senhaPartida
             // 
             this.senhaPartida.AcceptsReturn = true;
             this.senhaPartida.Location = new System.Drawing.Point(150, 73);
             this.senhaPartida.Name = "senhaPartida";
-            this.senhaPartida.Size = new System.Drawing.Size(98, 20);
+            this.senhaPartida.Size = new System.Drawing.Size(98, 22);
             this.senhaPartida.TabIndex = 4;
             this.senhaPartida.UseSystemPasswordChar = true;
-            this.senhaPartida.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // buttonEntrarPartida
             // 
@@ -635,9 +663,11 @@ namespace Projeto_Integrador3
             this.label8.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label8.Location = new System.Drawing.Point(8, 5);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(86, 19);
+            this.label8.Size = new System.Drawing.Size(102, 23);
             this.label8.TabIndex = 0;
             this.label8.Text = "Sua Jogada";
+            this.label8.Visible = false;
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // groupBox1
             // 
@@ -653,7 +683,7 @@ namespace Projeto_Integrador3
             this.groupBox1.TabIndex = 29;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            this.groupBox1.Visible = false;
             // 
             // buttonJogar
             // 
@@ -665,7 +695,9 @@ namespace Projeto_Integrador3
             this.buttonJogar.Size = new System.Drawing.Size(229, 48);
             this.buttonJogar.TabIndex = 26;
             this.buttonJogar.Text = "Jogar";
+            this.buttonJogar.UseCompatibleTextRendering = true;
             this.buttonJogar.UseVisualStyleBackColor = false;
+            this.buttonJogar.Visible = false;
             this.buttonJogar.Click += new System.EventHandler(this.buttonJogar_Click);
             // 
             // label6
@@ -674,9 +706,10 @@ namespace Projeto_Integrador3
             this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(12, 34);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(89, 13);
+            this.label6.Size = new System.Drawing.Size(103, 17);
             this.label6.TabIndex = 27;
             this.label6.Text = "Código do Dino";
+            this.label6.Visible = false;
             this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // label7
@@ -685,23 +718,27 @@ namespace Projeto_Integrador3
             this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(12, 70);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(107, 13);
+            this.label7.Size = new System.Drawing.Size(124, 17);
             this.label7.TabIndex = 28;
             this.label7.Text = "Código do Cercado";
+            this.label7.Visible = false;
             // 
             // textBoxDino
             // 
             this.textBoxDino.Location = new System.Drawing.Point(142, 29);
             this.textBoxDino.Name = "textBoxDino";
-            this.textBoxDino.Size = new System.Drawing.Size(93, 20);
+            this.textBoxDino.Size = new System.Drawing.Size(93, 22);
             this.textBoxDino.TabIndex = 24;
+            this.textBoxDino.Visible = false;
+            this.textBoxDino.TextChanged += new System.EventHandler(this.textBoxDino_TextChanged);
             // 
             // textBoxCercado
             // 
             this.textBoxCercado.Location = new System.Drawing.Point(142, 70);
             this.textBoxCercado.Name = "textBoxCercado";
-            this.textBoxCercado.Size = new System.Drawing.Size(93, 20);
+            this.textBoxCercado.Size = new System.Drawing.Size(93, 22);
             this.textBoxCercado.TabIndex = 25;
+            this.textBoxCercado.Visible = false;
             // 
             // labelDino
             // 
@@ -709,10 +746,9 @@ namespace Projeto_Integrador3
             this.labelDino.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDino.Location = new System.Drawing.Point(40, 114);
             this.labelDino.Name = "labelDino";
-            this.labelDino.Size = new System.Drawing.Size(69, 13);
+            this.labelDino.Size = new System.Drawing.Size(82, 17);
             this.labelDino.TabIndex = 17;
             this.labelDino.Text = "Dinossauros";
-            this.labelDino.Click += new System.EventHandler(this.labelDino_Click);
             // 
             // label5
             // 
@@ -720,7 +756,7 @@ namespace Projeto_Integrador3
             this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(12, 558);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 13);
+            this.label5.Size = new System.Drawing.Size(76, 17);
             this.label5.TabIndex = 21;
             this.label5.Text = "Versão DLL:";
             // 
@@ -730,7 +766,7 @@ namespace Projeto_Integrador3
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(301, 577);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(45, 13);
+            this.label4.Size = new System.Drawing.Size(53, 17);
             this.label4.TabIndex = 20;
             this.label4.Text = "Grupo: ";
             // 
@@ -740,10 +776,9 @@ namespace Projeto_Integrador3
             this.labelSenhaJogador.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelSenhaJogador.Location = new System.Drawing.Point(131, 558);
             this.labelSenhaJogador.Name = "labelSenhaJogador";
-            this.labelSenhaJogador.Size = new System.Drawing.Size(88, 13);
+            this.labelSenhaJogador.Size = new System.Drawing.Size(106, 17);
             this.labelSenhaJogador.TabIndex = 16;
             this.labelSenhaJogador.Text = "Senha Jogador: ";
-            this.labelSenhaJogador.Click += new System.EventHandler(this.labelSenhaJogador_Click);
             // 
             // labelIdJogador
             // 
@@ -751,10 +786,9 @@ namespace Projeto_Integrador3
             this.labelIdJogador.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelIdJogador.Location = new System.Drawing.Point(136, 583);
             this.labelIdJogador.Name = "labelIdJogador";
-            this.labelIdJogador.Size = new System.Drawing.Size(66, 13);
+            this.labelIdJogador.Size = new System.Drawing.Size(78, 17);
             this.labelIdJogador.TabIndex = 15;
             this.labelIdJogador.Text = "ID Jogador:";
-            this.labelIdJogador.Click += new System.EventHandler(this.labelIdJogador_Click);
             // 
             // buttonVersao
             // 
@@ -767,7 +801,6 @@ namespace Projeto_Integrador3
             this.buttonVersao.TabIndex = 2;
             this.buttonVersao.Text = "1.0";
             this.buttonVersao.UseVisualStyleBackColor = false;
-            this.buttonVersao.Click += new System.EventHandler(this.buttonVersao_Click);
             // 
             // labelGrupo
             // 
@@ -777,85 +810,103 @@ namespace Projeto_Integrador3
             this.labelGrupo.Name = "labelGrupo";
             this.labelGrupo.Size = new System.Drawing.Size(178, 36);
             this.labelGrupo.TabIndex = 7;
-            this.labelGrupo.Click += new System.EventHandler(this.labelGrupo_Click);
             // 
             // timer1
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 2000;
+            this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // panelTabuleiro
-            // 
-            this.panelTabuleiro.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelTabuleiro.BackgroundImage")));
-            this.panelTabuleiro.ErrorImage = null;
-            this.panelTabuleiro.Location = new System.Drawing.Point(1, 0);
-            this.panelTabuleiro.Name = "panelTabuleiro";
-            this.panelTabuleiro.Size = new System.Drawing.Size(1174, 946);
-            this.panelTabuleiro.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.panelTabuleiro.TabIndex = 2;
-            this.panelTabuleiro.TabStop = false;
-            this.panelTabuleiro.Click += new System.EventHandler(this.panelTabuleiro_Click);
-            // 
-            // panelFI
-            // 
-            this.panelFI.BackColor = System.Drawing.Color.Transparent;
-            this.panelFI.Location = new System.Drawing.Point(114, 112);
-            this.panelFI.Name = "panelFI";
-            this.panelFI.Size = new System.Drawing.Size(200, 100);
-            this.panelFI.TabIndex = 3;
-            // 
-            // panelRS
-            // 
-            this.panelRS.Location = new System.Drawing.Point(709, 124);
-            this.panelRS.Name = "panelRS";
-            this.panelRS.Size = new System.Drawing.Size(101, 62);
-            this.panelRS.TabIndex = 4;
             // 
             // panelMT
             // 
-            this.panelMT.BackColor = System.Drawing.Color.Transparent;
-            this.panelMT.Location = new System.Drawing.Point(94, 435);
+            this.panelMT.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelMT.BackgroundImage")));
+            this.panelMT.Location = new System.Drawing.Point(108, 295);
             this.panelMT.Name = "panelMT";
-            this.panelMT.Size = new System.Drawing.Size(200, 100);
-            this.panelMT.TabIndex = 5;
-            // 
-            // panelIS
-            // 
-            this.panelIS.BackColor = System.Drawing.Color.Transparent;
-            this.panelIS.Location = new System.Drawing.Point(679, 449);
-            this.panelIS.Name = "panelIS";
-            this.panelIS.Size = new System.Drawing.Size(200, 100);
-            this.panelIS.TabIndex = 6;
+            this.panelMT.Size = new System.Drawing.Size(139, 114);
+            this.panelMT.TabIndex = 3;
             // 
             // panelPA
             // 
-            this.panelPA.BackColor = System.Drawing.Color.Transparent;
-            this.panelPA.Location = new System.Drawing.Point(136, 728);
+            this.panelPA.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelPA.BackgroundImage")));
+            this.panelPA.Location = new System.Drawing.Point(174, 521);
             this.panelPA.Name = "panelPA";
-            this.panelPA.Size = new System.Drawing.Size(200, 100);
-            this.panelPA.TabIndex = 7;
+            this.panelPA.Size = new System.Drawing.Size(120, 127);
+            this.panelPA.TabIndex = 4;
             // 
             // panelCD
             // 
-            this.panelCD.BackColor = System.Drawing.Color.Transparent;
-            this.panelCD.Location = new System.Drawing.Point(769, 710);
+            this.panelCD.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelCD.BackgroundImage")));
+            this.panelCD.Location = new System.Drawing.Point(740, 507);
             this.panelCD.Name = "panelCD";
-            this.panelCD.Size = new System.Drawing.Size(200, 100);
-            this.panelCD.TabIndex = 8;
+            this.panelCD.Size = new System.Drawing.Size(124, 99);
+            this.panelCD.TabIndex = 5;
+            // 
+            // panelRS
+            // 
+            this.panelRS.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelRS.BackgroundImage")));
+            this.panelRS.Location = new System.Drawing.Point(646, 75);
+            this.panelRS.Name = "panelRS";
+            this.panelRS.Size = new System.Drawing.Size(97, 51);
+            this.panelRS.TabIndex = 7;
+            // 
+            // panelFI
+            // 
+            this.panelFI.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelFI.BackgroundImage")));
+            this.panelFI.Location = new System.Drawing.Point(114, 59);
+            this.panelFI.Name = "panelFI";
+            this.panelFI.Size = new System.Drawing.Size(180, 114);
+            this.panelFI.TabIndex = 4;
+            // 
+            // panelIS
+            // 
+            this.panelIS.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelIS.BackgroundImage")));
+            this.panelIS.Location = new System.Drawing.Point(658, 318);
+            this.panelIS.Name = "panelIS";
+            this.panelIS.Size = new System.Drawing.Size(139, 114);
+            this.panelIS.TabIndex = 4;
+            // 
+            // panelTabuleiro
+            // 
+            this.panelTabuleiro.Controls.Add(this.panelRIO);
+            this.panelTabuleiro.Controls.Add(this.panelPA);
+            this.panelTabuleiro.Controls.Add(this.panelIS);
+            this.panelTabuleiro.Controls.Add(this.panelFI);
+            this.panelTabuleiro.Controls.Add(this.panelMT);
+            this.panelTabuleiro.Controls.Add(this.panelRS);
+            this.panelTabuleiro.Controls.Add(this.panelCD);
+            this.panelTabuleiro.Controls.Add(this.pictureBoxTabuleiro);
+            this.panelTabuleiro.Location = new System.Drawing.Point(0, 0);
+            this.panelTabuleiro.Name = "panelTabuleiro";
+            this.panelTabuleiro.Size = new System.Drawing.Size(948, 753);
+            this.panelTabuleiro.TabIndex = 2;
+            // 
+            // panelRIO
+            // 
+            this.panelRIO.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelRIO.BackgroundImage")));
+            this.panelRIO.Location = new System.Drawing.Point(448, 546);
+            this.panelRIO.Name = "panelRIO";
+            this.panelRIO.Size = new System.Drawing.Size(172, 129);
+            this.panelRIO.TabIndex = 8;
+            this.panelRIO.Paint += new System.Windows.Forms.PaintEventHandler(this.panelRIO_Paint);
+            // 
+            // pictureBoxTabuleiro
+            // 
+            this.pictureBoxTabuleiro.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBoxTabuleiro.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxTabuleiro.Image")));
+            this.pictureBoxTabuleiro.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxTabuleiro.Name = "pictureBoxTabuleiro";
+            this.pictureBoxTabuleiro.Size = new System.Drawing.Size(948, 753);
+            this.pictureBoxTabuleiro.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxTabuleiro.TabIndex = 0;
+            this.pictureBoxTabuleiro.TabStop = false;
+            this.pictureBoxTabuleiro.Click += new System.EventHandler(this.pictureBoxTabuleiro_Click);
             // 
             // Form1
             // 
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(1711, 861);
-            this.Controls.Add(this.panelCD);
-            this.Controls.Add(this.panelPA);
-            this.Controls.Add(this.panelIS);
-            this.Controls.Add(this.panelMT);
-            this.Controls.Add(this.panelRS);
-            this.Controls.Add(this.panelFI);
-            this.Controls.Add(this.panelMenu);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ClientSize = new System.Drawing.Size(1493, 753);
             this.Controls.Add(this.panelTabuleiro);
+            this.Controls.Add(this.panelMenu);
             this.Name = "Form1";
             this.Text = "Projeto Integrador";
             this.panelMenu.ResumeLayout(false);
@@ -888,8 +939,10 @@ namespace Projeto_Integrador3
             this.panelContainer.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelTabuleiro)).EndInit();
+            this.panelTabuleiro.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTabuleiro)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -911,7 +964,6 @@ namespace Projeto_Integrador3
         private Label label5;
         private TextBox textBoxCercado;
         private TextBox textBoxDino;
-        private Button buttonJogar;
         private Label label7;
         private Label label6;
         private GroupBox groupBox1;
@@ -943,12 +995,19 @@ namespace Projeto_Integrador3
         private Button button2;
         private GroupBox groupBox8;
         private TextBox textBoxTabuleiro;
-        private PictureBox panelTabuleiro;
-        private Panel panelFI;
-        private Panel panelRS;
         private Panel panelMT;
-        private Panel panelIS;
         private Panel panelPA;
         private Panel panelCD;
+        private Panel panelRS;
+        private Button buttonExportarHistorico;
+        private Timer timer2;
+        private Button buttonAcompanhar;
+        private Panel panelFI;
+        private Panel panelIS;
+        private Panel panelTabuleiro;
+        private PictureBox pictureBoxTabuleiro;
+        private Panel panelRIO;
+        private Button buttonJogar;
+        private Button buttonPausarTimer;
     }
 }
